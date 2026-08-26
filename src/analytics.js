@@ -25,7 +25,7 @@ const CONFIG = {
   //    Acquisition → Campaigns → Create Campaign. The generated link
   //    contains ?pt=XXXXXXX — that number goes here.
   //    ⚠️ Without pt, Apple silently discards the ct campaign data.
-  appleProviderToken: '',
+  appleProviderToken: '128102719',
 
   appStoreId: '6751727490',
   defaultCampaign: 'site-direct',
