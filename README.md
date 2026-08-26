@@ -123,7 +123,17 @@ All six must return 200.
 
 ## Still open
 
-- [ ] Fill in the two CONFIG values above.
+- [ ] Fill in the two CONFIG values. Once you have them:
+
+  ```bash
+  ./setup-analytics.sh --pt 123456 --umami abcd-1234
+  ```
+
+  Patches `analytics.js`, validates it parses, commits, pushes, waits for the
+  Netlify build and confirms the new config is live. `--umami` is optional.
+  Neither value could be fetched programmatically: the ASC API has no campaigns
+  endpoint (`/v1/campaigns` 404s) and the provider token only exists once a
+  campaign is created in the web UI.
 - [ ] The App Store **description** still links `linguease.app/privacy` and
       `/terms`. That domain does not resolve at all (DNS failure, not a cert
       issue). Fixing it needs a version submission — it is not fixable from here.
