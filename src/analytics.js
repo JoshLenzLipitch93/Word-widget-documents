@@ -75,7 +75,9 @@ function resolveCampaign() {
 
 /* ---------- Stamp pt/ct on every App Store link -------------------------- */
 function stampAppStoreLinks(campaign) {
-  const base = 'https://apps.apple.com/us/app/linguease-learn-vocabulary/id' + CONFIG.appStoreId;
+  // Apple's own campaign-link format. No locale segment, so it resolves to the
+  // visitor's storefront rather than forcing the US one.
+  const base = 'https://apps.apple.com/app/apple-store/id' + CONFIG.appStoreId;
   const links = document.querySelectorAll('a[href*="apps.apple.com"]');
 
   links.forEach(function (a) {
