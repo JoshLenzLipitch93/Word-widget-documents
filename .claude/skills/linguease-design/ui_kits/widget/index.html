@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Linguease — Widget UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 40px; background: var(--bg-page); font-family: var(--ff-sans); font-weight: 300; color: var(--c-off-black); }
+  h1 { font-family: var(--ff-serif); font-weight: 400; font-size: 44px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .lead { font-size: 16px; color: var(--c-dark-grey); max-width: 640px; margin: 0 0 40px; }
+  h2 { font-family: var(--ff-sans); font-weight: 400; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-mid-grey); margin: 56px 0 20px; }
+  .size-row { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 24px; }
+  .size-label { width: 72px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-mid-grey); padding-top: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(6, 170px); gap: 18px 14px; }
+  .tile-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .tile-name { font-size: 11px; color: var(--c-dark-grey); }
+  .intro { display: flex; gap: 40px; align-items: center; padding: 32px; background: var(--c-light-grey); border-radius: 12px; margin-bottom: 40px; }
+</style>
+</head>
+<body>
+<h1>Widget UI kit</h1>
+<p class="lead">All three iOS widget sizes across all 24 themes. The widget is the product's core surface — one vocabulary pair per view, spaced-repetition rotated, colour shifted regularly to fight visual habituation.</p>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="themes.js"></script>
+<script type="text/babel" src="Widget.jsx"></script>
+<script type="text/babel">
+  function App() {
+    // Example word pairs cycled through.
+    const samples = [
+      { word: 'ciao',    trans: 'hello',    phon: '/ˈtʃaːo/' },
+      { word: 'arigato', trans: 'thank you',phon: '/aɾiɡatoː/' },
+      { word: 'bonjour', trans: 'hello',    phon: '/bɔ̃.ʒuʁ/' },
+      { word: 'gracias', trans: 'thank you',phon: '/ˈɡɾaθjas/' },
+      { word: 'danke',   trans: 'thank you',phon: '/ˈdaŋkə/' },
+      { word: 'prego',   trans: 'you\'re welcome', phon: '/ˈprɛːɡo/' },
+    ];
+
+    return (
+      <div>
+        <div className="intro">
+          <WidgetTile size="small" theme={WIDGET_THEMES[6]} word="ciao" translation="hello" phonetic="/ˈtʃaːo/"/>
+          <WidgetTile size="medium" theme={WIDGET_THEMES[2]} word="ciao" translation="hello" phonetic="/ˈtʃaːo/"/>
+        </div>
+
+        <h2>All 24 themes · small (2×2)</h2>
+        <div className="grid">
+          {WIDGET_THEMES.map((t, i) => {
+            const s = samples[i % samples.length];
+            return (
+              <div className="tile-wrap" key={i}>
+                <WidgetTile size="small" theme={t} word={s.word} translation={s.trans} phonetic={s.phon}/>
+                <div className="tile-name">{t.name}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        <h2>Medium · 4×2</h2>
+        <div style={{display:'grid', gridTemplateColumns:'repeat(2, 364px)', gap:'20px 14px'}}>
+          {WIDGET_THEMES.slice(0,6).map((t,i)=>{
+            const s = samples[i%samples.length];
+            return <WidgetTile key={i} size="medium" theme={t} word={s.word} translation={s.trans} phonetic={s.phon}/>;
+          })}
+        </div>
+
+        <h2>Large · 4×4</h2>
+        <div style={{display:'grid', gridTemplateColumns:'repeat(2, 364px)', gap:'24px'}}>
+          {[0,2,4,6].map(i=>{
+            const s = samples[i%samples.length];
+            return <WidgetTile key={i} size="large" theme={WIDGET_THEMES[i]} word={s.word} translation={s.trans} phonetic={s.phon}/>;
+          })}
+        </div>
+
+        <h2>Type behavior</h2>
+        <p style={{fontSize: 14, color: 'var(--c-dark-grey)', maxWidth: 620}}>
+          The primary word is Instrument Serif regular, sized to the widget (34 · 56 · 78). The source-language word sits beneath in italic at ~58% of the primary size, using a 70%-alpha-flattened version of the word colour for the automatic theme-matching translation tint. Phonetic uses Roboto Light.
+        </p>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

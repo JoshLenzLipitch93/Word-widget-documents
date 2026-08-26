@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Linguease — iOS App UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 48px; background: var(--bg-page); font-family: var(--ff-sans); font-weight: 300; color: var(--c-off-black); }
+  h1 { font-family: var(--ff-serif); font-weight: 400; font-size: 44px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .lead { font-size: 16px; color: var(--c-dark-grey); max-width: 680px; margin: 0 0 40px; }
+  .row { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 56px; }
+  .device-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .device-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-mid-grey); }
+  .nav { display: flex; gap: 8px; margin-bottom: 20px; background: var(--c-light-grey); border-radius: 16px; padding: 4px; width: fit-content; }
+  .nav button { border: none; background: transparent; padding: 10px 18px; border-radius: 13px; font-family: var(--ff-sans); font-weight: 400; font-size: 14px; color: var(--c-ink, #434446); cursor: pointer; }
+  .nav button.active { background: var(--c-off-black); color: var(--bg-page); }
+  h2 { font-family: var(--ff-sans); font-weight: 400; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-mid-grey); margin: 0 0 20px; }
+</style>
+</head>
+<body>
+<h1>iOS app UI kit</h1>
+<p class="lead">A click-through recreation of the Linguease iOS app — Welcome → Onboarding → Home (learning list) → Settings. Primary flows only; each screen uses the same components a real SwiftUI rewrite would.</p>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="App.jsx"></script>
+<script type="text/babel" src="Screens.jsx"></script>
+<script type="text/babel">
+  function App() {
+    const [view, setView] = React.useState('flow');
+    return (
+      <div>
+        <div className="nav">
+          {['flow','screens'].map(v =>
+            <button key={v} className={v===view?'active':''} onClick={()=>setView(v)}>{v === 'flow' ? 'Interactive flow' : 'All screens'}</button>
+          )}
+        </div>
+
+        {view === 'flow' ? (
+          <div>
+            <h2>Interactive flow — click through Welcome → Onboarding → Home → Settings</h2>
+            <LingueaseApp/>
+          </div>
+        ) : (
+          <div>
+            <h2>All screens side-by-side</h2>
+            <div className="row">
+              <div className="device-wrap">
+                <IOSDevice width={360} height={780}><WelcomeScreen onContinue={()=>{}}/></IOSDevice>
+                <div className="device-label">Welcome</div>
+              </div>
+              <div className="device-wrap">
+                <IOSDevice width={360} height={780}><OnboardingScreen step={0} onNext={()=>{}} onBack={()=>{}}/></IOSDevice>
+                <div className="device-label">Onboarding · step 1</div>
+              </div>
+              <div className="device-wrap">
+                <IOSDevice width={360} height={780}><OnboardingScreen step={2} onNext={()=>{}} onBack={()=>{}}/></IOSDevice>
+                <div className="device-label">Onboarding · step 3</div>
+              </div>
+              <div className="device-wrap">
+                <IOSDevice width={360} height={780}><OnboardingScreen step={3} onNext={()=>{}} onBack={()=>{}}/></IOSDevice>
+                <div className="device-label">Onboarding · step 4</div>
+              </div>
+              <div className="device-wrap">
+                <IOSDevice width={360} height={780}><HomeScreen onSettings={()=>{}} onAdd={()=>{}}/></IOSDevice>
+                <div className="device-label">Home · learning</div>
+              </div>
+              <div className="device-wrap">
+                <IOSDevice width={360} height={780}><SettingsScreen onBack={()=>{}}/></IOSDevice>
+                <div className="device-label">Settings</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

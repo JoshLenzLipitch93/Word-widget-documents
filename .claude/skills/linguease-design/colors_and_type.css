@@ -1,0 +1,289 @@
+/* ======================================================================
+   Linguease — Colors & Type
+   Source of truth: Word-Widget iOS repo (Theme.swift + Typography.swift)
+   ====================================================================== */
+
+/* Real brand TTFs shipped in fonts/. Same files the iOS app ships. */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("fonts/InstrumentSerif-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("fonts/InstrumentSerif-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto-VariableFont_wdth_wght.ttf") format("truetype-variations"),
+       url("fonts/Roboto-VariableFont_wdth_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto-Italic-VariableFont_wdth_wght.ttf") format("truetype-variations"),
+       url("fonts/Roboto-Italic-VariableFont_wdth_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ==============================================================
+     COLORS — exact Figma values from Theme.Colors (Theme.swift)
+     ============================================================== */
+
+  /* Core */
+  --c-white:          #FFFFFF;
+  --c-black:          #000000;
+  --c-off-black:      #434446;   /* body text, primary surface ink */
+  --c-mid-off-black:  #515356;   /* pressed dark button */
+
+  /* Neutrals — warm greige family */
+  --c-dark-grey:        #918B87; /* secondary text */
+  --c-mid-grey:         #C4BEBB; /* placeholders, translation on widget */
+  --c-mid-light-grey:   #EDE7E4;
+  --c-light-grey:       #F2EBE6; /* rows, pills, segmented control bg */
+  --c-extra-light-grey: #FAF5F2; /* app background — the "page" color */
+
+  /* Brand — Terracotta (primary action / accent) */
+  --c-terracotta:        #DC624F;
+  --c-deep-terracotta:   #C84D3A;   /* pressed */
+  --c-light-terracotta:  #F16B57;
+  --c-white-terracotta:  #FFD7D1;
+  --c-peach-text:        #FFC4BA;
+  --c-word-dark-terracotta: #722316;
+
+  /* Secondary accents */
+  --c-bright-blue:             #5D94EE;
+  --c-light-bright-blue:       #81B1FF;
+  --c-super-light-bright-blue: #D8E7FF;
+
+  --c-yellow:           #FFC66F; /* the LOGO yellow — signature accent */
+  --c-light-yellow:     #FFDCA9;
+  --c-dark-yellow:      #82602D;
+  --c-extra-dark-yellow:#5D4520;
+
+  --c-red: #E74930;               /* destructive */
+
+  /* Transparency tokens (on top of off-black) */
+  --c-overlay:         #494B4D26; /* ~15% modal scrim */
+  --c-darker-outline:  #4344461A; /* 10% hairline */
+  --c-dark-outline:    #43444633; /* 20% */
+  --c-active-outline:  #43444666; /* 40% — placeholder color too */
+
+  /* ---------- SEMANTIC ALIASES ---------- */
+  --fg-primary:        var(--c-off-black);  /* default text */
+  --fg-secondary:      var(--c-dark-grey);  /* sub text / metadata */
+  --fg-muted:          var(--c-mid-grey);   /* placeholder, translation */
+  --fg-on-brand:       var(--c-white);      /* text on terracotta / blue */
+  --fg-destructive:    var(--c-red);
+
+  --bg-page:           var(--c-extra-light-grey); /* #FAF5F2 */
+  --bg-surface:        var(--c-white);
+  --bg-row:            var(--c-light-grey);
+  --bg-input-chip:     var(--c-light-grey);
+
+  --accent-primary:    var(--c-terracotta);  /* FAB, sign-up hero */
+  --accent-primary-pressed: var(--c-deep-terracotta);
+  --accent-primary-soft:    var(--c-white-terracotta);
+
+  --accent-action:     var(--c-bright-blue); /* "Continue" style buttons */
+  --accent-action-pressed: #DAE5F7;          /* PrimaryButton pressed bg */
+
+  --hairline:          #0000000D; /* black 5% — used as row separators */
+
+  /* ==============================================================
+     TYPOGRAPHY
+     Instrument Serif → headlines, display, widget word
+     Roboto → all UI chrome, body, labels, buttons
+     ============================================================== */
+
+  --ff-serif:  "Instrument Serif", "Iowan Old Style", "Apple Garamond", Georgia, serif;
+  --ff-sans:   "Roboto", -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+
+  /* Raw sizes used in-app */
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-30: 30px;
+  --fs-32: 32px;
+  --fs-42: 42px;
+  --fs-44: 44px;
+
+  --fw-light:   300;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    700;
+
+  /* ==============================================================
+     SPACING, RADII, SHADOWS
+     Observed from the iOS code — no formal scale; these are the
+     values that actually appear in the product.
+     ============================================================== */
+  --sp-4: 4px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-16: 16px;   /* the dominant rhythm */
+  --sp-24: 24px;
+  --sp-32: 32px;
+  --sp-40: 40px;
+  --sp-48: 48px;
+  --sp-56: 56px;
+
+  /* Corners */
+  --radius-sm:   10px;    /* PrimaryButton */
+  --radius-md:   12px;    /* cards, setting groups, stats pill */
+  --radius-lg:   16px;    /* settings icon chip, segmented */
+  --radius-xl:   18px;    /* video modal */
+  --radius-2xl:  38px;    /* bottom sheet modal */
+  --radius-pill: 999px;
+
+  /* Widget-specific: iOS widget corner is device-dependent,
+     the in-app preview uses ~11.57% of the widget side. */
+  --widget-corner-pct: 11.57%;
+
+  /* Shadows — the app uses ONE shadow, only on banners:
+     0 12px 24px rgba(0,0,0,0.05). That's it. Everything else is flat. */
+  --shadow-banner: 0 12px 24px rgba(0, 0, 0, 0.05);
+
+  /* Focus ring (browser only; iOS doesn't have one) */
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--c-bright-blue) 35%, transparent);
+}
+
+/* ==================================================================
+   SEMANTIC TEXT STYLES
+   Synchronized with Typography.Named in the iOS repo.
+   ================================================================== */
+.t-display-hero {
+  /* WelcomeView: "Your effortless language boost" */
+  font-family: var(--ff-serif);
+  font-size: var(--fs-44);
+  font-weight: var(--fw-regular);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--c-extra-light-grey);
+}
+
+.t-display {
+  /* Onboarding titles, modal headings */
+  font-family: var(--ff-serif);
+  font-size: var(--fs-30);
+  font-weight: var(--fw-regular);
+  line-height: 1.15;
+  color: var(--c-off-black);
+}
+
+.t-display-sm {
+  /* Settings name, stats */
+  font-family: var(--ff-serif);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-regular);
+  line-height: 1.2;
+  color: var(--c-off-black);
+}
+
+.t-word {
+  /* Primary word on the widget and in the learning row */
+  font-family: var(--ff-serif);
+  font-size: var(--fs-24);
+  font-weight: var(--fw-regular);
+  line-height: 1.1;
+  color: var(--c-off-black);
+}
+
+.t-word-secondary {
+  /* The italic source word under the translation */
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: var(--fs-20);
+  line-height: 1.1;
+  color: var(--c-mid-grey);
+}
+
+.t-body {
+  /* Default running copy */
+  font-family: var(--ff-sans);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-light);
+  line-height: 1.5;
+  color: var(--c-off-black);
+}
+
+.t-body-regular {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-regular);
+  line-height: 1.3;
+  color: var(--c-off-black);
+}
+
+.t-body-medium {
+  /* Setting row labels, section header text */
+  font-family: var(--ff-sans);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-medium);
+  color: var(--c-off-black);
+}
+
+.t-caption {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-light);
+  line-height: 1.5;
+  color: var(--c-dark-grey);
+}
+
+.t-eyebrow {
+  /* Settings section headers: "LANGUAGE SETTINGS" */
+  font-family: var(--ff-sans);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-regular);
+  line-height: 1.154;
+  text-transform: uppercase;
+  color: var(--c-mid-grey);
+  letter-spacing: 0.04em;
+}
+
+.t-button {
+  font-family: var(--ff-sans);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-regular);
+  color: var(--c-white);
+}
+
+/* ==================================================================
+   ELEMENTS — minimal defaults, only for preview cards.
+   Real product styling belongs to UI-kit components.
+   ================================================================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-page);
+  color: var(--fg-primary);
+  font-family: var(--ff-sans);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-light);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 { font-family: var(--ff-serif); font-weight: var(--fw-regular); margin: 0; }
+h1 { font-size: var(--fs-42); line-height: 1.1; }
+h2 { font-size: var(--fs-30); line-height: 1.15; }
+h3 { font-size: var(--fs-24); line-height: 1.2; }
+
+p { margin: 0 0 var(--sp-12); }

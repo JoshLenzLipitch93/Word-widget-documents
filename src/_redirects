@@ -1,0 +1,8 @@
+# Redundant with netlify.toml on purpose. These four paths are on the live
+# App Store listing — App Review reads /privacy-policy and /support — so they
+# get belt and braces rather than one mechanism.
+/privacy-policy   /privacy-policy.html   200
+/privacy          /privacy-policy.html   200
+/terms-of-use     /terms-of-use.html     200
+/terms            /terms-of-use.html     200
+/support          /support.html          200

@@ -1,0 +1,65 @@
+/* Shared helper styles for preview cards.
+   Each preview card imports colors_and_type.css and this file. */
+
+* { box-sizing: border-box; }
+html, body {
+  width: 700px;
+  overflow: hidden;
+}
+body.card {
+  padding: 24px;
+  background: var(--bg-page);
+  color: var(--fg-primary);
+}
+
+/* Generic label row */
+.lbl {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: var(--fw-regular);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-mid-grey);
+}
+
+.mono {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--c-dark-grey);
+}
+
+/* Swatch grid */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.sw {
+  aspect-ratio: 1.35 / 1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.sw.bordered { box-shadow: inset 0 0 0 1px var(--c-darker-outline); }
+.sw .n {
+  font-family: var(--ff-sans);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+}
+.sw .h {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.stack { display: flex; flex-direction: column; gap: 8px; }

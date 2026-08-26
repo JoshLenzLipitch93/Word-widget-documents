@@ -1,0 +1,56 @@
+[build]
+  publish = "src"
+  # Static site — no build step.
+
+# ---------------------------------------------------------------------------
+# Clean URLs for the pages the live App Store listing links to.
+# These paths MUST keep resolving — App Review reads /privacy-policy and
+# /support. Explicit rewrites rather than relying on Netlify's Pretty URLs.
+# ---------------------------------------------------------------------------
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy-policy.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms-of-use"
+  to = "/terms-of-use.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms"
+  to = "/terms-of-use.html"
+  status = 200
+
+[[redirects]]
+  from = "/support"
+  to = "/support.html"
+  status = 200
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/styles/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
