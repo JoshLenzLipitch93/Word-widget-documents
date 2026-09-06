@@ -81,12 +81,13 @@ const SAMPLE_WORDS = [
   }
 })();
 
-/* ---------- Hero widget rotation ---------- */
-(function rotateHeroWidgets() {
-  const tiles = document.querySelectorAll('.hero__stage .widget-tile');
+/* ---------- Widget tile rotation ---------- */
+// One tile now, in the widget band. The gate is the hero, so this is the
+// only place on the page the themes cycle live.
+(function rotateWidgetTiles() {
+  const tiles = document.querySelectorAll('[data-rotate="widget"]');
   if (!tiles.length) return;
 
-  // Seed with distinct starting themes so the first paint has variety.
   const state = Array.from(tiles).map((_, i) => ({
     themeIdx: (i * 7) % WIDGET_THEMES.length,
     wordIdx:  (i * 11) % SAMPLE_WORDS.length,
@@ -106,30 +107,39 @@ const SAMPLE_WORDS = [
   }
   tiles.forEach((_, i) => paint(i));
 
-  // Rotate one tile at a time — feels calmer than all three flipping together.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   let cursor = 0;
   setInterval(() => {
     state[cursor].themeIdx = (state[cursor].themeIdx + 1 + Math.floor(Math.random() * 3)) % WIDGET_THEMES.length;
     state[cursor].wordIdx  = (state[cursor].wordIdx + 1 + Math.floor(Math.random() * 2)) % SAMPLE_WORDS.length;
     paint(cursor);
     cursor = (cursor + 1) % tiles.length;
-  }, 2400);
+  }, 2800);
 })();
 
-/* ---------- Step 3 colour demo — fade through a few themes ---------- */
-(function stepThree() {
-  const el = document.getElementById('step-color-demo');
-  if (!el) return;
-  const wordEl = el.querySelector('div > div:nth-child(1)');
-  const transEl = el.querySelector('div > div:nth-child(2)');
-  const sequence = [3, 4, 7, 9, 11, 19, 21]; // sage, blue, purple, peach, lavender, violet, yellow/pink
-  let i = 0;
-  setInterval(() => {
-    i = (i + 1) % sequence.length;
-    const theme = WIDGET_THEMES[sequence[i]];
-    el.style.background = theme.bg;
-    el.style.color = theme.word;
-    if (wordEl) wordEl.style.color = theme.word;
-    if (transEl) transEl.style.color = theme.trans;
-  }, 2800);
+/* ---------- Header: hero chrome, then page chrome ---------- */
+// Over the hero the bar carries no fill. The observer's region starts one
+// header-height down the viewport, so the hero counts as "behind the bar"
+// until its last pixel clears that line. Nothing runs on scroll.
+(function headerOverHero() {
+  const header = document.getElementById('site-header');
+  const hero = document.querySelector('.hero');
+  if (!header || !hero || !('IntersectionObserver' in window)) return;
+
+  new IntersectionObserver(([entry]) => {
+    header.classList.toggle('site-header--over', entry.isIntersecting);
+  }, { rootMargin: '-64px 0px 0px 0px', threshold: 0 }).observe(hero);
+})();
+
+/* ---------- Hero loop: hold still if the visitor asked for that ---------- */
+(function respectReducedMotion() {
+  const video = document.querySelector('.device--hero video');
+  if (!video) return;
+  const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const apply = () => {
+    if (query.matches) { video.removeAttribute('autoplay'); video.pause(); }
+  };
+  apply();
+  query.addEventListener('change', apply);
 })();

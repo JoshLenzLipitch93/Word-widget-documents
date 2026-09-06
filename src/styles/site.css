@@ -7,7 +7,11 @@
    - Instrument Serif for display + expressive; Roboto light for body.
    - Flat, warm, analog. One shadow only (banner). No gradients.
    - Primary button = off-black 52px, radius 10, Roboto 16 medium.
-   - Terracotta is reserved — hero background + destructive only.
+   - Yellow is the hero ground. It is the same yellow as the home-screen
+     wallpaper in the intervention recording, so the phone sits in the
+     page rather than on it and the terracotta gate screen is the only
+     thing in the hero that changes.
+   - Terracotta is now accent + destructive only (it belongs to the gate).
    ====================================================================== */
 
 /* ---------- Fonts (same TTFs the iOS app ships) ---------- */
@@ -89,12 +93,22 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .section--tight { padding: 48px 0; }
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header ----------
+   Over the hero the bar is the hero: no fill, no rule, light ink. Once the
+   hero has scrolled past, it settles into the cream page chrome. Toggled by
+   an IntersectionObserver on the hero, so there is no scroll handler.
+   ---------------------------------------------------------------------- */
 .site-header {
   position: sticky; top: 0; z-index: 10;
   background: color-mix(in srgb, var(--c-extra-light-grey) 92%, transparent);
   backdrop-filter: saturate(1.1) blur(6px);
   border-bottom: 1px solid var(--hairline);
+  transition: background 220ms ease-out, border-color 220ms ease-out, color 220ms ease-out;
+}
+.site-header--over {
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
 }
 .site-header__inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -104,15 +118,20 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   display: flex; align-items: center; gap: 10px;
   font-family: var(--ff-serif); font-size: 22px; color: var(--c-off-black);
   letter-spacing: -0.01em;
+  transition: color 220ms ease-out;
 }
+.site-header--over .brand { color: #fff; }
 .brand__mark { width: 28px; height: 28px; }
 .brand__mark svg { width: 100%; height: 100%; }
 
 .nav { display: flex; align-items: center; gap: 24px; }
 .nav a {
   font-size: 14px; color: var(--c-dark-grey); font-weight: 300;
+  transition: color 220ms ease-out;
 }
 .nav a:hover { color: var(--c-off-black); }
+.site-header--over .nav a:not(.btn) { color: color-mix(in srgb, #fff 78%, transparent); }
+.site-header--over .nav a:not(.btn):hover { color: #fff; }
 
 /* ---------- Primary button (10px radius, Roboto 16 medium, off-black) ---------- */
 .btn {
@@ -126,57 +145,69 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .btn:hover { background: var(--c-mid-off-black); }
 .btn:active { background: var(--c-mid-off-black); }
-
-.btn--ghost {
-  background: transparent; color: var(--c-off-black);
-  box-shadow: inset 0 0 0 1px rgba(67,68,70,0.18);
-}
-.btn--ghost:hover { background: rgba(67,68,70,0.04); }
-
 .btn--small { height: 40px; padding: 0 16px; font-size: 14px; }
-
-.btn--on-terracotta {
-  background: #fff; color: var(--c-off-black);
+/* Over the terracotta hero the fill would read as a hole. An outline in the
+   same white as the headline keeps the text white and the bar quiet. */
+.site-header--over .btn {
+  background: transparent; color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
 }
-.btn--on-terracotta:hover { background: var(--c-light-grey); }
+.site-header--over .btn:hover { background: rgba(255,255,255,0.14); }
 
-/* ---------- Hero (terracotta page, matches WelcomeView) ---------- */
+/* ---------- Hero — the rendered gate loop ----------
+   Ground is --c-terracotta, the exact colour of the gate screen inside the
+   video, so the screen dissolves into the page the moment the word appears.
+   ---------------------------------------------------------------------- */
 .hero {
   background: var(--c-terracotta);
   color: #fff;
   position: relative;
-  overflow: hidden;
+  /* Pull the hero up under the sticky header so the bar sits ON the
+     terracotta rather than on a cream strip above it. The padding below
+     puts the content back where it was. */
+  margin-top: -64px;
 }
 .hero__inner {
-  padding: 84px 0 88px;
+  padding-top: 136px;
+  padding-bottom: 88px;
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 64px; align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px; align-items: center;
 }
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; gap: 40px; padding: 56px 0 64px; }
-}
-.hero__eyebrow {
-  font-family: var(--ff-sans); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--c-peach-text); margin-bottom: 24px;
+  .hero__inner { grid-template-columns: 1fr; gap: 40px; padding-top: 120px; padding-bottom: 64px; }
 }
 .hero__title {
   font-family: var(--ff-serif); font-weight: 400;
   font-size: clamp(40px, 6vw, 76px);
   line-height: 1.02; letter-spacing: -0.015em;
-  color: var(--c-extra-light-grey);
+  color: #fff;
   margin: 0 0 18px;
-}
-.hero__title em {
-  font-style: italic; color: #fff;
 }
 .hero__sub {
   font-family: var(--ff-sans); font-weight: 300; font-size: 18px; line-height: 1.5;
-  color: color-mix(in srgb, #fff 85%, transparent);
+  color: color-mix(in srgb, #fff 86%, transparent);
   max-width: 460px;
   margin: 0 0 28px;
 }
-.hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.hero__stage { display: flex; justify-content: center; }
+
+/* Indie badge — a recessed panel rather than a lighter one, so it sits
+   under the App Store badge without competing with it. */
+.indie {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 28px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: rgba(0,0,0,0.08);
+  max-width: 460px;
+}
+.indie__heart { width: 46px; height: 41px; flex-shrink: 0; color: var(--c-yellow); }
+.indie__text {
+  margin: 0; font-size: 16px; line-height: 1.35; font-weight: 300;
+  color: color-mix(in srgb, #fff 92%, transparent);
+}
+.indie__text strong { font-weight: 500; color: #fff; }
 
 /* Apple's official App Store badge. Per guidelines: leave clear space, don't recolour. */
 .app-store-badge {
@@ -190,118 +221,37 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .app-store-badge:hover { opacity: 0.85; }
 
-.hero__meta {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-top: 28px;
-}
-.hero__meta--top {
-  margin-top: 0;
-  margin-bottom: 18px;
-}
-.hero__btn--ghost {
-  background: transparent; color: #fff;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
-}
-.hero__btn--ghost:hover {
-  background: rgba(255,255,255,0.08);
-}
 
-/* Hero visual: phone frame with looping intervention video + floating widget */
 .hero__stage {
   position: relative;
   display: flex; justify-content: center; align-items: center;
-  min-height: 460px;
 }
-.hero__widget {
-  position: absolute;
-  bottom: -12px; left: -8px;
-  transform: rotate(-6deg);
-  z-index: 2;
-}
-.hero__widget .widget-tile {
-  width: 140px; height: 140px;
-  border-radius: 22px;
-  background: var(--c-yellow);
-  color: #5D4520;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.22), 0 2px 4px rgba(0,0,0,0.08);
-}
-.hero__widget .widget-tile__content { padding: 18px; justify-content: flex-end; }
-.hero__widget .widget-tile__word { font-size: 28px; color: #5D4520; }
-.hero__widget .widget-tile__translation { font-size: 16px; color: #9C7336; }
-.hero__widget .widget-tile__phonetic { font-size: 11px; color: #9C7336; margin-top: 6px; }
 @media (max-width: 900px) {
-  .hero__stage { min-height: auto; padding-top: 16px; }
-  .hero__widget { bottom: -24px; left: 4vw; transform: rotate(-6deg) scale(0.85); }
+  .hero__stage { padding-top: 8px; }
 }
 
-/* Phone frame — matches iOS phone bezel 4.6px off-black stroke from the design system */
-.phone-frame {
+/* ---------- Device ----------
+   The recordings are rendered with their own bezel, cropped to the phone's
+   bounding box. All this has to do is round the corners off the crop so the
+   cream that sits outside the squircle never shows.
+   ---------------------------------------------------------------------- */
+.device {
   position: relative;
-  width: 300px;
-  aspect-ratio: 9 / 19.5;
-  border-radius: 46px;
-  background: #000;
-  padding: 10px;
-  box-shadow: 0 26px 60px rgba(0,0,0,0.28), 0 4px 8px rgba(0,0,0,0.08);
+  /* The media is masked to the phone silhouette over #16181A, so the corner
+     rounding only ever trims black against the page. */
+  border-radius: 13.6% / 6.4%;
   overflow: hidden;
+  flex-shrink: 0;
+  line-height: 0;
 }
-.phone-frame--md { width: 280px; }
-.phone-frame__video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  border-radius: 38px;
-  display: block;
-  background: var(--c-extra-light-grey);
+.device__screen { width: 100%; height: auto; display: block; }
+.device--hero {
+  width: 330px;
+  box-shadow: 0 30px 64px rgba(80, 24, 12, 0.32);
 }
-.phone-frame__notch {
-  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
-  width: 100px; height: 28px;
-  background: #000;
-  border-radius: 18px;
-  z-index: 2;
-}
-@media (max-width: 420px) {
-  .phone-frame { width: 240px; }
-  .phone-frame__notch { width: 80px; height: 22px; top: 12px; }
-}
-
-.hero__stage .widget-stack { position: relative; width: 320px; height: 420px; }
-.widget-stack__tile {
-  position: absolute;
-  transition: background 560ms ease-out, color 560ms ease-out, transform 420ms ease-out;
-  will-change: background, color;
-  box-shadow: 0 18px 38px rgba(0,0,0,0.18), 0 2px 4px rgba(0,0,0,0.08);
-}
-.widget-stack__tile--medium {
-  top: 0; left: 50%; transform: translateX(-50%) rotate(-3deg);
-  width: 300px; height: 140px; border-radius: 34px;
-}
-.widget-stack__tile--small-a {
-  bottom: 20px; left: -10px; transform: rotate(-8deg);
-  width: 150px; height: 150px; border-radius: 26px;
-}
-.widget-stack__tile--small-b {
-  bottom: 60px; right: -10px; transform: rotate(7deg);
-  width: 150px; height: 150px; border-radius: 26px;
-}
-.widget-tile__content {
-  padding: 22px;
-  display: flex; flex-direction: column; justify-content: center; height: 100%;
-  font-family: var(--ff-serif);
-}
-.widget-tile__word {
-  font-size: 38px; line-height: 1.0; letter-spacing: -0.01em;
-}
-.widget-tile--medium .widget-tile__word { font-size: 56px; }
-.widget-tile__translation {
-  font-style: italic; margin-top: 4px; line-height: 1.1;
-  font-size: 20px;
-}
-.widget-tile--medium .widget-tile__translation { font-size: 30px; }
-.widget-tile__phonetic {
-  margin-top: 10px;
-  font-family: var(--ff-sans); font-weight: 300; font-size: 12px;
-}
+.device--step { width: 100%; max-width: 260px; }
+@media (max-width: 900px) { .device--hero { width: 296px; } }
+@media (max-width: 420px) { .device--hero { width: 256px; } }
 
 /* ---------- Section header ---------- */
 .eyebrow {
@@ -323,185 +273,102 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   max-width: 520px;
   margin: 16px 0 0;
 }
+.section-head { max-width: 620px; }
 
-/* ---------- How it works (3 steps) ---------- */
+/* ---------- Feature tiles — the App Store panel set ---------- */
+.tiles {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1000px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .tiles { grid-template-columns: 1fr; } }
+.tile {
+  background: var(--c-terracotta);
+  color: #fff;
+  border-radius: 12px;
+  padding: 28px 24px 24px;
+  display: flex; flex-direction: column;
+}
+.tile__title {
+  font-family: var(--ff-serif); font-weight: 400; font-size: 26px;
+  line-height: 1.12; letter-spacing: -0.01em; color: #fff;
+  margin: 0 0 10px;
+}
+.tile__body {
+  font-family: var(--ff-sans); font-weight: 300; font-size: 14px; line-height: 1.5;
+  color: color-mix(in srgb, #fff 78%, transparent);
+  margin: 0 0 22px;
+}
+.tile__stage { margin-top: 2px; }
+.tile__glyph { width: 64px; height: 64px; color: color-mix(in srgb, #fff 68%, transparent); }
+
+/* Tile 1 — the app's own list rows */
+.word-list {
+  background: var(--c-extra-light-grey);
+  border-radius: 10px;
+  padding: 4px 12px;
+}
+.word-row {
+  display: flex; flex-direction: column;
+  padding: 7px 0 7px 10px;
+  border-left: 2px solid var(--c-terracotta);
+  border-bottom: 1px solid var(--hairline);
+}
+.word-row:last-child { border-bottom: 0; }
+.word-row__word {
+  font-family: var(--ff-serif); font-size: 16px; line-height: 1.1; color: var(--c-off-black);
+}
+.word-row__trans {
+  font-family: var(--ff-serif); font-style: italic; font-size: 13px; color: var(--c-dark-grey);
+}
+
+/* Tile 2 — the Siri bubble from the store screenshots */
+.siri-bubble {
+  background: var(--c-yellow);
+  color: var(--c-extra-dark-yellow, #5D4520);
+  border-radius: 14px;
+  padding: 16px 18px;
+  font-family: var(--ff-serif); font-size: 18px; line-height: 1.35;
+  display: flex; flex-direction: column;
+}
+.siri-bubble em { font-style: italic; }
+
+/* Tile 3 — language chips, not flags: flag emoji fall apart off Apple platforms */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  display: inline-flex; align-items: center;
+  height: 26px; padding: 0 11px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.20);
+  font-family: var(--ff-sans); font-size: 13px; font-weight: 300; color: #fff;
+}
+
+/* ---------- The gate — three stills lifted from the same recording ---------- */
 .steps {
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 56px;
+  gap: 48px;
+  margin: 56px 0 0;
+  padding: 0; list-style: none;
 }
-@media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr; gap: 56px; } }
 .step {
-  background: var(--c-light-grey);
-  border-radius: 12px;
-  padding: 24px;
-  display: flex; flex-direction: column; gap: 16px;
-  min-height: 280px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 28px;
 }
+.step__text { max-width: 320px; }
 .step__num {
-  font-family: var(--ff-serif); font-size: 30px; line-height: 1;
-  color: var(--c-off-black);
-}
-.step__stage {
-  flex: 1;
-  display: flex; align-items: center; justify-content: center;
-  min-height: 120px;
+  font-family: var(--ff-sans); font-size: 12px; letter-spacing: 0.12em;
+  color: var(--c-mid-grey); margin-bottom: 10px;
 }
 .step__title {
-  font-family: var(--ff-serif); font-weight: 400; font-size: 24px;
-  line-height: 1.15; color: var(--c-off-black); margin: 0;
+  font-family: var(--ff-serif); font-weight: 400; font-size: 26px;
+  line-height: 1.15; color: var(--c-off-black); margin: 0 0 8px;
 }
 .step__body {
   font-family: var(--ff-sans); font-weight: 300; font-size: 15px;
-  color: var(--c-dark-grey); line-height: 1.5; margin: 0;
+  color: var(--c-dark-grey); line-height: 1.55; margin: 0;
 }
-
-/* ---------- Widget theme showcase ---------- */
-.showcase {
-  background: var(--c-mid-light-grey);
-  overflow: hidden;
-}
-.showcase .theme-strip { margin-top: 64px; padding-bottom: 64px; }
-.showcase__header { margin-bottom: 48px; }
-
-/* The widget-stack when used as feature media — center it with room */
-.feature__media--plain .widget-stack {
-  position: relative; width: 320px; height: 420px;
-}
-.theme-strip {
-  display: flex; gap: 16px;
-  animation: scroll 60s linear infinite;
-  width: max-content;
-}
-.theme-strip:hover { animation-play-state: paused; }
-@keyframes scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.theme-tile {
-  width: 160px; height: 160px; border-radius: 19px;
-  padding: 18px; font-family: var(--ff-serif);
-  flex-shrink: 0;
-  display: flex; flex-direction: column; justify-content: center;
-}
-.theme-tile__word {
-  font-size: 30px; line-height: 1; letter-spacing: -0.01em;
-}
-.theme-tile__translation {
-  font-style: italic; font-size: 18px; line-height: 1.1; margin-top: 4px;
-}
-
-/* ---------- Interventions (two-column alternating) ---------- */
-.feature-row {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 64px; align-items: center;
-}
-.feature-row + .feature-row { margin-top: 96px; }
-.feature-row--flip { direction: rtl; }
-.feature-row--flip > * { direction: ltr; }
-@media (max-width: 860px) {
-  .feature-row { grid-template-columns: 1fr; gap: 32px; direction: ltr; }
-}
-
-.feature__media {
-  background: var(--c-light-grey);
-  border-radius: 18px;
-  padding: 48px;
-  display: flex; align-items: center; justify-content: center;
-  min-height: 360px;
-}
-.feature__media--plain {
-  background: transparent;
-  padding: 0;
-}
-
-/* ---------- Features grid (Siri / languages / own words / colours) ---------- */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-top: 48px;
-}
-@media (max-width: 720px) { .features-grid { grid-template-columns: 1fr; } }
-
-.feature-card {
-  background: var(--c-light-grey);
-  border-radius: 12px;
-  padding: 28px;
-  display: flex; flex-direction: column; gap: 14px;
-}
-.feature-card__glyph {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--c-mid-light-grey);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--c-off-black);
-}
-.feature-card__glyph--dark {
-  background: var(--c-off-black);
-  color: var(--c-extra-light-grey);
-}
-.feature-card__glyph svg { width: 22px; height: 22px; }
-.feature-card__title {
-  font-family: var(--ff-serif); font-weight: 400; font-size: 24px;
-  line-height: 1.15; color: var(--c-off-black); margin: 0;
-}
-.feature-card__body {
-  font-family: var(--ff-sans); font-weight: 300; font-size: 15px;
-  color: var(--c-dark-grey); line-height: 1.5; margin: 0;
-}
-.feature-card__body em { font-family: var(--ff-serif); font-style: italic; color: var(--c-off-black); font-size: 17px; }
-
-.lang-chips {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  margin-top: 4px;
-}
-.lang-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 28px; padding: 0 12px;
-  border-radius: 999px;
-  background: var(--c-extra-light-grey);
-  font-family: var(--ff-sans); font-size: 13px; font-weight: 400;
-  color: var(--c-off-black);
-}
-
-/* Mock intervention gate */
-.intervention-mock {
-  width: 260px;
-  background: var(--c-extra-light-grey);
-  border-radius: 28px;
-  padding: 24px;
-  border: 4.6px solid var(--c-off-black);
-  font-family: var(--ff-serif);
-  box-shadow: var(--shadow-banner);
-}
-.intervention-mock__title {
-  font-size: 22px; line-height: 1.15; color: var(--c-off-black);
-  margin: 0 0 16px;
-}
-.intervention-mock__slot {
-  font-family: var(--ff-sans); font-size: 12px; font-weight: 300;
-  color: var(--c-dark-grey); margin-bottom: 6px;
-}
-.intervention-mock__word {
-  font-size: 32px; color: var(--c-off-black); letter-spacing: -0.01em;
-}
-.intervention-mock__source {
-  font-style: italic; font-size: 18px; color: var(--c-mid-grey); margin-top: 2px;
-}
-.intervention-mock__input {
-  margin-top: 20px; height: 44px; border-radius: 10px;
-  background: var(--c-light-grey);
-  display: flex; align-items: center; padding: 0 14px;
-  font-family: var(--ff-sans); font-size: 14px; color: var(--c-mid-grey);
-  font-weight: 300;
-}
-.intervention-mock__btn {
-  margin-top: 16px; height: 44px; border-radius: 10px;
-  background: var(--c-off-black); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--ff-sans); font-weight: 500; font-size: 14px;
-}
+.step__body em { font-family: var(--ff-serif); font-style: italic; color: var(--c-off-black); font-size: 17px; }
 
 /* ---------- List / tick bullets ---------- */
 .tick-list { list-style: none; padding: 0; margin: 24px 0 0; }
@@ -517,6 +384,79 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   flex-shrink: 0; width: 18px; height: 18px; margin-top: 3px;
   color: var(--c-off-black);
 }
+/* Under the steps the ticks read as one row, not a stacked list. */
+.tick-list--wide {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0 24px; margin-top: 32px;
+  border-top: 1px solid var(--hairline);
+}
+.tick-list--wide li { border-bottom: 0; padding: 20px 0 0; align-items: flex-start; }
+@media (max-width: 860px) {
+  .tick-list--wide { grid-template-columns: 1fr; gap: 0; }
+  .tick-list--wide li { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+  .tick-list--wide li:last-child { border-bottom: 0; }
+}
+
+/* ---------- Widget — one band, deliberately ---------- */
+.showcase {
+  background: var(--c-mid-light-grey);
+  overflow: hidden;
+}
+.showcase .theme-strip { margin-top: 56px; }
+.widget-brief {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 56px; align-items: center;
+}
+@media (max-width: 860px) {
+  .widget-brief { grid-template-columns: 1fr; gap: 32px; }
+}
+.widget-brief__stage { display: flex; justify-content: center; min-width: 0; }
+.widget-brief .widget-tile {
+  width: 100%; max-width: 300px; height: 140px; border-radius: 34px;
+  box-shadow: 0 18px 38px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06);
+  transition: background 560ms ease-out, color 560ms ease-out;
+  will-change: background, color;
+}
+.widget-tile__content {
+  padding: 22px;
+  display: flex; flex-direction: column; justify-content: center; height: 100%;
+  font-family: var(--ff-serif);
+}
+.widget-tile__word {
+  font-size: 38px; line-height: 1.0; letter-spacing: -0.01em;
+}
+.widget-tile--medium .widget-tile__word { font-size: 52px; }
+.widget-tile__translation {
+  font-style: italic; margin-top: 4px; line-height: 1.1;
+  font-size: 20px;
+}
+.widget-tile--medium .widget-tile__translation { font-size: 28px; }
+
+.theme-strip {
+  display: flex; gap: 16px;
+  animation: scroll 60s linear infinite;
+  width: max-content;
+}
+.theme-strip:hover { animation-play-state: paused; }
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-strip { animation: none; }
+}
+.theme-tile {
+  width: 160px; height: 160px; border-radius: 19px;
+  padding: 18px; font-family: var(--ff-serif);
+  flex-shrink: 0;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.theme-tile__word {
+  font-size: 30px; line-height: 1; letter-spacing: -0.01em;
+}
+.theme-tile__translation {
+  font-style: italic; font-size: 18px; line-height: 1.1; margin-top: 4px;
+}
 
 /* ---------- FAQ ---------- */
 .faq {
@@ -527,12 +467,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .faq details {
   border-bottom: 1px solid var(--hairline);
-  padding: 20px 0;
 }
 .faq details:last-child { border-bottom: 0; }
 .faq summary {
   font-family: var(--ff-sans); font-weight: 500; font-size: 16px;
   color: var(--c-off-black);
+  padding: 20px 0;
   cursor: pointer; list-style: none;
   display: flex; justify-content: space-between; align-items: center;
   gap: 16px;
@@ -547,7 +487,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .faq details[open] summary::after { transform: rotate(-135deg); }
 .faq p {
-  margin: 12px 0 0;
+  margin: -4px 0 20px;
   font-size: 15px; color: var(--c-dark-grey); font-weight: 300;
   line-height: 1.6;
 }
@@ -584,35 +524,12 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .site-footer a { color: var(--c-dark-grey); }
 .site-footer a:hover { color: var(--c-off-black); }
-.site-footer__links { display: flex; gap: 24px; flex-wrap: wrap; }
-
-/* ---------- Quiet, warm-pink intervention-badge ---------- */
-.pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  height: 28px; padding: 0 12px;
-  border-radius: 999px;
-  background: var(--c-light-grey);
-  font-family: var(--ff-sans); font-size: 12px; font-weight: 500;
-  color: var(--c-off-black);
-  letter-spacing: 0.02em;
-}
-.pill--light {
-  background: rgba(255,255,255,0.14); color: #fff;
-}
-.pill--eyebrow {
-  height: 36px;
-  padding: 0 16px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
+.site-footer__links { display: flex; gap: 8px 24px; flex-wrap: wrap; margin: -10px 0; }
+.site-footer__links a { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* Utilities */
-.stack > * + * { margin-top: 16px; }
 .muted { color: var(--c-dark-grey); }
 .center { text-align: center; }
-.max-lead { max-width: 640px; margin-left: auto; margin-right: auto; }
 
 /* ======================================================================
    Mobile header + overflow guard
@@ -625,12 +542,14 @@ html, body { overflow-x: hidden; }
 
 @media (max-width: 720px) {
   .site-header__inner { height: 58px; gap: 12px; }
+  .hero { margin-top: -58px; }
+  .hero__inner { padding-top: 106px; }
   .brand { font-size: 20px; }
   .brand__mark { width: 24px; height: 24px; }
   /* Section links go — the page is short and there is a CTA at the end. */
   .nav a:not(.btn) { display: none; }
   .nav { gap: 0; flex-shrink: 0; }
-  .nav .btn--small { height: 38px; padding: 0 14px; font-size: 14px; }
+  .nav .btn--small { height: 44px; padding: 0 16px; font-size: 14px; }
 }
 
 @media (max-width: 380px) {

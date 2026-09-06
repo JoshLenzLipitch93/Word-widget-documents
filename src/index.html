@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Linguease — learn Brazilian Portuguese every time you open Instagram</title>
-  <meta name="description" content="A word in Brazilian Portuguese stands between you and the apps you open by habit. Type it, then carry on. Plus a home-screen widget that keeps one word in front of you all day." />
+  <meta name="description" content="A word in Brazilian Portuguese stands between you and the apps you open by habit. Type it, then carry on. You open them dozens of times a day, so that is dozens of words." />
   <link rel="canonical" href="https://lingueaseapp.com" />
 
   <meta property="og:type" content="website" />
@@ -25,16 +25,15 @@
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header site-header--over" id="site-header">
   <div class="container site-header__inner">
     <a href="/" class="brand">
       <span class="brand__mark"><img src="assets/logo.svg" alt="" /></span>
       <span>Linguease</span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="#intervention">The gate</a>
+      <a href="#gate">How it works</a>
       <a href="#widget">Widget</a>
-      <a href="#features">Features</a>
       <a href="#faq">FAQ</a>
       <a class="btn btn--small" href="#get">Get the app</a>
     </nav>
@@ -42,176 +41,169 @@
 </header>
 
 <!-- ============================================================
-     HERO
+     HERO — the rendered gate loop. The page ground is the same
+     terracotta (#DC624F) as the gate screen inside the video, so when
+     the word appears the phone stops being a phone and the page and
+     the product are one surface. The recording carries its own bezel,
+     so there is no CSS phone frame here.
      ============================================================ -->
 <section class="hero">
   <div class="container hero__inner">
     <div class="hero__copy">
-      <div class="hero__meta hero__meta--top">
-        <span class="pill pill--light pill--eyebrow">Brazilian Portuguese, one word at a time</span>
-      </div>
-      <h1 class="hero__title">Keep scrolling.<br/><em>Make it cost something.</em></h1>
-      <p class="hero__sub">Before Instagram, TikTok or X opens, a Portuguese word stands in the way. Type it, then carry on. You open those apps dozens of times a day — that is dozens of words.</p>
-      <div class="hero__ctas">
-        <a class="app-store-badge" data-placement="hero"
-           href="https://apps.apple.com/app/apple-store/id6751727490?pt=128102719&amp;ct=site-direct&amp;mt=8"
-           aria-label="Download Linguease on the App Store">
-          <img src="assets/app-store-badge.svg" alt="Download on the App Store" />
-        </a>
+      <h1 class="hero__title">Keep scrolling.<br/>Make it cost something.</h1>
+      <p class="hero__sub">Before Instagram, TikTok or X opens, a Portuguese word stands in the way. Type it, then carry on.</p>
+      <a class="app-store-badge" data-placement="hero"
+         href="https://apps.apple.com/app/apple-store/id6751727490?pt=128102719&amp;ct=site-direct&amp;mt=8"
+         aria-label="Download Linguease on the App Store">
+        <img src="assets/app-store-badge.svg" alt="Download on the App Store" />
+      </a>
+      <div class="indie">
+        <svg class="indie__heart" viewBox="0 0 36 32" fill="currentColor" aria-hidden="true" shape-rendering="crispEdges"><rect x="4" y="0" width="8" height="4"/><rect x="24" y="0" width="8" height="4"/><rect x="0" y="4" width="16" height="4"/><rect x="20" y="4" width="16" height="4"/><rect x="0" y="8" width="36" height="4"/><rect x="0" y="12" width="36" height="4"/><rect x="4" y="16" width="28" height="4"/><rect x="8" y="20" width="20" height="4"/><rect x="12" y="24" width="12" height="4"/><rect x="16" y="28" width="4" height="4"/></svg>
+        <p class="indie__text">Linguease is an <strong>indie app</strong> built by one person.</p>
       </div>
     </div>
 
     <div class="hero__stage">
-      <div class="phone-frame">
-        <video class="phone-frame__video" src="assets/video/intervention.mp4"
-               poster="assets/video/intervention-poster.jpg"
-               autoplay muted loop playsinline preload="auto"
-               aria-label="Linguease intervening before Instagram opens, asking for a Portuguese word."></video>
-        <div class="phone-frame__notch" aria-hidden="true"></div>
+      <div class="device device--hero">
+        <video class="device__screen" src="assets/video/gate-loop.mp4"
+               poster="assets/video/gate-loop-poster.jpg"
+               autoplay muted loop playsinline preload="metadata"
+               aria-label="Opening Instagram. Linguease asks for the Portuguese for cool, the word legal is typed, and Instagram opens."></video>
       </div>
-      <div class="hero__widget" aria-hidden="true">
-        <div class="widget-tile" data-widget="hero-small">
-          <div class="widget-tile__content">
-            <div class="widget-tile__word" data-slot="word">saudade</div>
-            <div class="widget-tile__translation" data-slot="trans">the ache of missing</div>
-            <div class="widget-tile__phonetic" data-slot="phon">/sawˈda.dʒi/</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE TILES — the App Store panel set, on the page.
+     Terracotta cards on the cream ground so they read as one
+     deliberate set rather than more hero.
+     ============================================================ -->
+<section class="section section--tight" id="what">
+  <div class="container">
+    <div class="tiles">
+
+      <article class="tile">
+        <h2 class="tile__title">Add your own words.</h2>
+        <p class="tile__body">Type or paste anything you are trying to hold on to. Linguease fills in the translation and the phonetic.</p>
+        <div class="tile__stage">
+          <div class="word-list" aria-hidden="true">
+            <div class="word-row"><span class="word-row__word">bom dia</span><span class="word-row__trans">good morning</span></div>
+            <div class="word-row"><span class="word-row__word">mesmo</span><span class="word-row__trans">same</span></div>
+            <div class="word-row"><span class="word-row__word">sempre</span><span class="word-row__trans">always</span></div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </article>
 
-<!-- ============================================================
-     THE GATE
-     ============================================================ -->
-<section id="intervention" class="section">
-  <div class="container">
-    <div class="feature-row">
-      <div class="feature__media feature__media--plain">
-        <div class="phone-frame phone-frame--md">
-          <video class="phone-frame__video" src="assets/video/intervention.mp4"
-                 poster="assets/video/intervention-poster.jpg"
-                 autoplay muted loop playsinline preload="none"></video>
-          <div class="phone-frame__notch" aria-hidden="true"></div>
+      <article class="tile">
+        <h2 class="tile__title">Never open the app.</h2>
+        <p class="tile__body">Hear something on the street you do not know? Say it to Siri and it is waiting at the next gate.</p>
+        <div class="tile__stage">
+          <div class="siri-bubble" aria-hidden="true">
+            <span>&ldquo;Hey Siri,</span>
+            <span>add <em>saideira</em> to Linguease&rdquo;</span>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="eyebrow">The gate</div>
-        <h2 class="display">One word before <em>the</em> scroll.</h2>
-        <p class="lede">Set it up once and Linguease sits in front of Instagram, TikTok, X, YouTube, Reddit and Facebook. <em>Puxar</em> means pull, not push. Type it, and the app opens.</p>
-        <ul class="tick-list">
-          <li><svg class="tick" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Works with any app you can name in Shortcuts.</li>
-          <li><svg class="tick" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>No Screen Time setup. No Family Controls permission.</li>
-          <li><svg class="tick" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Skip once if you genuinely need to. Linguease remembers.</li>
-        </ul>
-      </div>
+      </article>
+
+      <article class="tile">
+        <h2 class="tile__title">More than Portuguese.</h2>
+        <p class="tile__body">Brazilian Portuguese is where the word lists are strongest. These are in the picker too.</p>
+        <div class="tile__stage">
+          <div class="chips" aria-hidden="true">
+            <span class="chip">Espa&ntilde;ol</span><span class="chip">Fran&ccedil;ais</span><span class="chip">Deutsch</span>
+            <span class="chip">Italiano</span><span class="chip">Nederlands</span><span class="chip">Gaeilge</span>
+            <span class="chip">Portugu&ecirc;s (PT)</span><span class="chip">English</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile">
+        <h2 class="tile__title">No Screen Time.</h2>
+        <p class="tile__body">The gate is a Shortcuts automation. Linguease never asks for the Family Controls permission, and translations run on-device.</p>
+        <div class="tile__stage">
+          <svg class="tile__glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M24 5l15 6v11c0 10-6.4 17.6-15 21-8.6-3.4-15-11-15-21V11z"/>
+            <path d="M17 24l5 5 10-11"/>
+          </svg>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     WIDGET
+     THE GATE — the whole product, in three beats.
+     ============================================================ -->
+<section id="gate" class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2 class="display">One word before <em>the</em> scroll.</h2>
+      <p class="lede">Set it up once and Linguease sits in front of Instagram, TikTok, X, YouTube, Reddit and Facebook. Nothing else about your phone changes.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="device device--step">
+          <img class="device__screen" src="assets/video/step-1-home.jpg" alt="A home screen with Instagram and TikTok on it." loading="lazy" width="540" height="1148" />
+        </div>
+        <div class="step__text">
+          <div class="step__num">01</div>
+          <h3 class="step__title">You tap Instagram.</h3>
+          <p class="step__body">Same icon, same habit, no change to your home screen. The gate is a Shortcuts automation you set up once and then forget.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="device device--step">
+          <img class="device__screen" src="assets/video/step-2-gate.jpg" alt="Linguease asking for the Portuguese for cool, with legal typed in." loading="lazy" width="540" height="1148" />
+        </div>
+        <div class="step__text">
+          <div class="step__num">02</div>
+          <h3 class="step__title">A word gets in the way.</h3>
+          <p class="step__body"><em>Cool</em>, and you type <em>legal</em>. Get it wrong and it shows you the answer rather than making a thing of it.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="device device--step">
+          <img class="device__screen" src="assets/video/step-3-open.jpg" alt="Instagram open on the phone, a moment later." loading="lazy" width="540" height="1148" />
+        </div>
+        <div class="step__text">
+          <div class="step__num">03</div>
+          <h3 class="step__title">You carry on.</h3>
+          <p class="step__body">Two seconds later Instagram opens and you scroll like you were going to anyway. One word better off, and nothing to keep up with.</p>
+        </div>
+      </li>
+    </ol>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     WIDGET — deliberately one band. The gate is the product; the
+     widget is what happens between openings.
      ============================================================ -->
 <section id="widget" class="section section--tight showcase">
-  <div class="container">
-    <div class="feature-row feature-row--flip">
-      <div class="feature__media feature__media--plain">
-        <div class="widget-stack">
-          <div class="widget-stack__tile widget-stack__tile--small-a widget-tile" data-widget="small-a">
-            <div class="widget-tile__content">
-              <div class="widget-tile__word" data-slot="word">cafuné</div>
-              <div class="widget-tile__translation" data-slot="trans">stroking someone’s hair</div>
-              <div class="widget-tile__phonetic" data-slot="phon">/ka.fuˈnɛ/</div>
-            </div>
-          </div>
-          <div class="widget-stack__tile widget-stack__tile--medium widget-tile widget-tile--medium" data-widget="medium">
-            <div class="widget-tile__content">
-              <div class="widget-tile__word" data-slot="word">madrugada</div>
-              <div class="widget-tile__translation" data-slot="trans">small hours</div>
-            </div>
-          </div>
-          <div class="widget-stack__tile widget-stack__tile--small-b widget-tile" data-widget="small-b">
-            <div class="widget-tile__content">
-              <div class="widget-tile__word" data-slot="word">legal</div>
-              <div class="widget-tile__translation" data-slot="trans">cool</div>
-              <div class="widget-tile__phonetic" data-slot="phon">/leˈgaw/</div>
-            </div>
-          </div>
+  <div class="container widget-brief">
+    <div>
+      <div class="eyebrow">A separate feature</div>
+      <h2 class="display">There is also a <em>home-screen widget</em>.</h2>
+      <p class="lede">Nothing to do with the gate, and it works on its own. Add the Linguease widget to your home screen in small, medium or large, and it holds one word in front of you between openings. It changes colour on a spaced-repetition cycle so it never quietly becomes wallpaper. Twenty-four themes, and words you have nailed rotate out.</p>
+    </div>
+    <div class="widget-brief__stage">
+      <div class="widget-tile widget-tile--medium" data-rotate="widget">
+        <div class="widget-tile__content">
+          <div class="widget-tile__word" data-slot="word">madrugada</div>
+          <div class="widget-tile__translation" data-slot="trans">small hours</div>
         </div>
-      </div>
-      <div>
-        <div class="eyebrow">Home-screen widget</div>
-        <h2 class="display">One word, <em>waiting</em> for you.</h2>
-        <p class="lede">A calm tile on your home screen. Small, medium or large. It changes colour on a spaced-repetition cycle, so it never quietly becomes wallpaper.</p>
-        <ul class="tick-list">
-          <li><svg class="tick" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Translation on top, the word in italic, phonetic underneath.</li>
-          <li><svg class="tick" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Twenty-four colour themes — pick one or let it rotate.</li>
-          <li><svg class="tick" viewBox="0 0 24 24" fill="none"><path d="M5 12.5L10 17.5L19 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Words you've nailed rotate out. The stubborn ones don't.</li>
-        </ul>
       </div>
     </div>
   </div>
 
   <div class="theme-strip" id="theme-strip" aria-hidden="true"></div>
-</section>
-
-<!-- ============================================================
-     FEATURES
-     ============================================================ -->
-<section id="features" class="section">
-  <div class="container">
-    <div class="eyebrow">Everything else</div>
-    <h2 class="display">A few quiet details.</h2>
-
-    <div class="features-grid">
-
-      <article class="feature-card">
-        <div class="feature-card__glyph feature-card__glyph--dark">
-          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 20c0-2.5 2-4 4-4s4 1.5 4 4"/><circle cx="11" cy="11" r="2.5"/>
-            <path d="M18 9c1.4 0 2.5 1 2.5 2.5s-1.1 2.5-2.5 2.5"/><path d="M20 18c2 .3 3 1.5 3 3"/>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Add words with Siri.</h3>
-        <p class="feature-card__body">Hear something on the street you don't know? Say "Hey Siri, add <em>saideira</em> to Linguease" and it lands on your widget without opening the app.</p>
-      </article>
-
-      <article class="feature-card">
-        <div class="feature-card__glyph feature-card__glyph--dark">
-          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="14" cy="14" r="9"/><path d="M5 14h18"/>
-            <path d="M14 5c2.5 3 3.8 6 3.8 9s-1.3 6-3.8 9"/><path d="M14 5c-2.5 3-3.8 6-3.8 9s1.3 6 3.8 9"/>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Built for Brazilian Portuguese.</h3>
-        <p class="feature-card__body">The words that actually come up — <em>massa</em>, <em>rodízio</em>, <em>pertinho</em> — not textbook set pieces. Fifty other languages are in the picker if Portuguese isn't the one you're after.</p>
-      </article>
-
-      <article class="feature-card">
-        <div class="feature-card__glyph feature-card__glyph--dark">
-          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 7h16"/><path d="M6 13h12"/><path d="M6 19h8"/><path d="M20 17v6M17 20h6"/>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Your own words.</h3>
-        <p class="feature-card__body">Type or paste anything you're trying to hold on to. Linguease fills in the translation and the phonetic. No fixed lists, no forced curriculum, no streak to protect.</p>
-      </article>
-
-      <article class="feature-card">
-        <div class="feature-card__glyph feature-card__glyph--dark">
-          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="14" cy="14" r="9"/><circle cx="9.5" cy="11" r="1.3"/><circle cx="14" cy="8.5" r="1.3"/>
-            <circle cx="18.5" cy="11" r="1.3"/><circle cx="19" cy="16" r="1.3"/>
-            <path d="M13 23c-2-.5-3-2-3-3.5 0-2 2-2.5 2-4"/>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">Works with the phone off.</h3>
-        <p class="feature-card__body">Translations run on-device once your language has downloaded. No connection needed, and nothing about what you're learning leaves the phone.</p>
-      </article>
-
-    </div>
-  </div>
 </section>
 
 <!-- ============================================================
@@ -224,20 +216,24 @@
 
     <div class="faq">
       <details>
-        <summary>How is this different from Duolingo?</summary>
-        <p>Duolingo is a study session you sit down for. Linguease is the opposite — it uses the time you were going to waste anyway. No streaks, no pressure, no gamification. If you already do a lesson a day, this sits alongside it rather than replacing it.</p>
-      </details>
-      <details>
         <summary>Does the gate use Screen Time?</summary>
-        <p>No. Linguease uses a Siri Shortcuts personal automation to put the word in front of the app you're opening. You set it up once in the Shortcuts app and Linguease walks you through it. It never asks for the Family Controls permission.</p>
+        <p>No. Linguease uses a Siri Shortcuts personal automation to put the word in front of the app you are opening. You set it up once in the Shortcuts app and Linguease walks you through it. It never asks for the Family Controls permission.</p>
       </details>
       <details>
         <summary>Which apps can I put it in front of?</summary>
-        <p>Any app you can name in Shortcuts. Most people pick Instagram, TikTok, X, YouTube, Reddit and Facebook, but nothing is hard-coded.</p>
+        <p>Most of them. Instagram, TikTok, X, YouTube, Reddit and Facebook all work, and so do plenty of others. It depends on whether Shortcuts can see the app, so a few will not work. Nothing is hard-coded, so it is worth trying the one you have in mind.</p>
+      </details>
+      <details>
+        <summary>What if I am in a hurry?</summary>
+        <p>Skip it. There is a dismiss on every gate and no penalty for using it. The point is the words you do type, not the ones you do not.</p>
+      </details>
+      <details>
+        <summary>How is this different from Duolingo?</summary>
+        <p>Duolingo is a study session you sit down for. Linguease is the opposite: it uses the time you were going to waste anyway. No streaks, no pressure, no gamification. If you already do a lesson a day, this sits alongside it rather than replacing it.</p>
       </details>
       <details>
         <summary>Is it only Brazilian Portuguese?</summary>
-        <p>That's what it's built around and where the word lists are strongest. Fifty other languages are available in the picker, European Portuguese, Spanish, French, Italian, German, Dutch and Irish among them.</p>
+        <p>That is what it is built around and where the word lists are strongest. Fifty other languages are available in the picker, European Portuguese, Spanish, French, Italian, German, Dutch and Irish among them.</p>
       </details>
       <details>
         <summary>Is it free?</summary>
@@ -245,7 +241,7 @@
       </details>
       <details>
         <summary>iPhone only?</summary>
-        <p>Yes, for now — iOS 16 and above. The whole product is the home-screen widget and the Shortcuts gate, and both are iPhone-specific.</p>
+        <p>Yes, for now, iOS 16 and above. The whole product is the Shortcuts gate and the home-screen widget, and both are iPhone-specific.</p>
       </details>
     </div>
   </div>
@@ -258,7 +254,7 @@
   <div class="cta-band">
     <div class="eyebrow" style="color:rgba(255,255,255,0.55);">Free to try</div>
     <h2 class="display">Add a few words. Open Instagram. See what happens.</h2>
-    <p class="cta-band__sub">The widget is free. The rest is a quiet subscription — cancel any time.</p>
+    <p class="cta-band__sub">The widget is free. The rest is a quiet subscription, cancel any time.</p>
     <a class="app-store-badge" data-placement="cta-band"
        href="https://apps.apple.com/app/apple-store/id6751727490?pt=128102719&amp;ct=site-direct&amp;mt=8"
        aria-label="Download Linguease on the App Store">
