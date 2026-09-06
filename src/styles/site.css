@@ -40,6 +40,7 @@
 
 /* ---------- Tokens (mirrored from design system) ---------- */
 :root {
+  --gutter: 40px;
   --c-off-black:      #434446;
   --c-mid-off-black:  #515356;
   --c-dark-grey:      #918B87;
@@ -84,7 +85,30 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   margin: 0 auto;
   padding: 0 40px;
 }
-@media (max-width: 720px) { .container { padding: 0 20px; } }
+@media (max-width: 720px) { :root { --gutter: 20px; } .container { padding: 0 20px; } }
+/* Landscape on a notched phone puts the cutout in the side margin. */
+@supports (padding: max(0px)) {
+  .container {
+    padding-left: max(40px, env(safe-area-inset-left));
+    padding-right: max(40px, env(safe-area-inset-right));
+  }
+  @media (max-width: 720px) {
+    .container {
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+  }
+  .site-header__inner {
+    padding-left: max(40px, env(safe-area-inset-left));
+    padding-right: max(40px, env(safe-area-inset-right));
+  }
+  @media (max-width: 720px) {
+    .site-header__inner {
+      padding-left: max(20px, env(safe-area-inset-left));
+      padding-right: max(20px, env(safe-area-inset-right));
+    }
+  }
+}
 .section {
   padding: 96px 0;
 }
@@ -245,6 +269,22 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .hero__stage { padding-top: 8px; }
 }
 
+@media (orientation: landscape) and (max-height: 540px) {
+  .hero__inner {
+    grid-template-columns: 1.15fr 1fr; gap: 28px;
+    /* Top-aligned, not centred: centring against the tall phone pushed the
+       store badge below a 390px-tall fold. */
+    padding-top: 76px; padding-bottom: 0; align-items: start;
+  }
+  .hero__copy { padding-bottom: 16px; }
+  .hero__title { font-size: 32px; margin-bottom: 16px; }
+  .indie { margin-bottom: 20px; padding: 8px 12px; }
+  .indie__heart { width: 24px; height: 22px; }
+  .indie__text { font-size: 13px; }
+  .device--hero { width: 190px; top: 16px; margin-bottom: -64px; }
+  .app-store-badge { height: 44px; }
+}
+
 /* ---------- Device ----------
    The recordings are rendered with their own bezel, cropped to the phone's
    bounding box. All this has to do is round the corners off the crop so the
@@ -294,9 +334,10 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   gap: 28px;
   max-width: 1200px; margin: 0 auto;
 }
-@media (max-width: 860px) { .cards { grid-template-columns: 1fr; gap: 36px; max-width: 420px; margin: 0 auto; } }
-.card { margin: 0; }
+}
+.card { margin: 0; min-width: 0; }
 .card__art {
+  min-width: 0;
   background: var(--c-extra-light-grey);
   border-radius: 24px;
   padding: 28px;
@@ -330,11 +371,13 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 
 /* Card 2 — nine flags, drawn rather than emoji so they survive off Apple */
 .flags {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 26px; place-items: center;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 5%, 26px); place-items: center;
+  width: 100%;
 }
 .flag {
-  display: block; width: 84px; height: 84px;
+  display: block; width: 100%; max-width: 84px;
+  aspect-ratio: 1 / 1; height: auto;
   border-radius: 50%; overflow: hidden;
   box-shadow: 0 0 0 4px var(--c-light-yellow, #FFDCA9);
 }
@@ -377,7 +420,6 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   max-width: 1120px;
   padding: 0; list-style: none;
 }
-@media (max-width: 860px) { .steps { grid-template-columns: 1fr; gap: 56px; } }
 .step {
   display: flex; flex-direction: column; align-items: center;
   gap: 28px;
@@ -567,6 +609,9 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
    matters more than it looks.
    ====================================================================== */
 html, body { overflow-x: hidden; }
+:target, section[id] { scroll-margin-top: 76px; }
+/* iOS paints a grey box on tap; keep feedback but in the brand's ink. */
+a, button, summary { -webkit-tap-highlight-color: rgba(67,68,70,0.12); }
 
 @media (max-width: 720px) {
   .site-header__inner { height: 58px; gap: 12px; }
@@ -578,8 +623,50 @@ html, body { overflow-x: hidden; }
   .nav a:not(.btn) { display: none; }
   .nav { gap: 0; flex-shrink: 0; }
   .nav .btn--small { height: 44px; padding: 0 16px; font-size: 14px; }
+  .brand { min-height: 44px; }               /* was a 30px tap target */
+  .site-footer { font-size: 14px; }
+  .site-footer__inner { gap: 16px; }
 }
 
 @media (max-width: 380px) {
   .nav .btn--small { padding: 0 12px; font-size: 13px; }
+}
+
+/* ======================================================================
+   Phones — structure, not just scale
+   These live at the end deliberately: they override the base rules above,
+   and an earlier position silently lost to them (the steps kept their
+   desktop column direction for exactly that reason).
+   ====================================================================== */
+@media (max-width: 860px) {
+  .cards {
+    display: flex; grid-template-columns: none;
+    max-width: none; gap: 14px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Bleed to the screen edges so the next card peeks and the swipe reads. */
+    margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter);
+    scroll-padding-left: var(--gutter);
+    scrollbar-width: none;
+  }
+  .cards::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 min(78%, 300px); scroll-snap-align: start; }
+  .card__art { height: 380px; padding: 22px; }
+  .card__caption { font-size: 24px; text-align: left; }
+
+@media (max-width: 860px) {
+  .steps { grid-template-columns: 1fr; gap: 24px; }
+  .step {
+    flex-direction: row; align-items: center; gap: clamp(14px, 4%, 20px);
+    padding-bottom: 24px; border-bottom: 1px solid var(--hairline);
+  }
+  .step:last-child { border-bottom: 0; padding-bottom: 0; }
+  /* Scale the still with the viewport: a fixed 128px left the text column at
+     134px on a 320 screen, which stretched each step to 484px tall. */
+  .device--step { flex: none; width: clamp(96px, 34%, 140px); max-width: 140px; }
+  .step__text { max-width: none; }
+  .step__num { margin-bottom: 6px; }
+  .step__title { font-size: 21px; margin-bottom: 6px; }
+  .step__body { font-size: 14px; }
 }

@@ -110,12 +110,24 @@ const SAMPLE_WORDS = [
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   let cursor = 0;
-  setInterval(() => {
+  let timer = null;
+  const tick = () => {
     state[cursor].themeIdx = (state[cursor].themeIdx + 1 + Math.floor(Math.random() * 3)) % WIDGET_THEMES.length;
     state[cursor].wordIdx  = (state[cursor].wordIdx + 1 + Math.floor(Math.random() * 2)) % SAMPLE_WORDS.length;
     paint(cursor);
     cursor = (cursor + 1) % tiles.length;
-  }, 2800);
+  };
+  const start = () => { if (!timer) timer = setInterval(tick, 2800); };
+  const stop  = () => { clearInterval(timer); timer = null; };
+
+  // Only run while the band is actually on screen.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()), { threshold: 0 })
+      .observe(tiles[0]);
+  } else {
+    start();
+  }
+  document.addEventListener('visibilitychange', () => document.hidden && stop());
 })();
 
 /* ---------- Header: hero chrome, then page chrome ---------- */
@@ -132,14 +144,47 @@ const SAMPLE_WORDS = [
   }, { rootMargin: '-64px 0px 0px 0px', threshold: 0 }).observe(hero);
 })();
 
-/* ---------- Hero loop: hold still if the visitor asked for that ---------- */
-(function respectReducedMotion() {
+/* ---------- Hero loop: motion, data and battery ----------
+   Most of the traffic here is paid mobile, so the loop should not play to an
+   empty room, and it should not spend someone's data if they have asked it
+   not to.
+   ---------------------------------------------------------------------- */
+(function heroVideoBehaviour() {
   const video = document.querySelector('.device--hero video');
   if (!video) return;
-  const query = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const apply = () => {
-    if (query.matches) { video.removeAttribute('autoplay'); video.pause(); }
-  };
-  apply();
-  query.addEventListener('change', apply);
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const saveData = navigator.connection && navigator.connection.saveData;
+
+  if (saveData) {
+    // The poster already shows the home screen, so there is still something
+    // to look at; it just costs nothing.
+    video.removeAttribute('autoplay');
+    video.preload = 'none';
+    video.pause();
+    return;
+  }
+
+  const hold = () => reduce.matches;
+  if (hold()) { video.removeAttribute('autoplay'); video.pause(); }
+  reduce.addEventListener('change', () => hold() ? video.pause() : video.play().catch(() => {}));
+
+  // Stop decoding once it has scrolled away.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      if (hold()) return;
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.1 }).observe(video);
+  }
+})();
+
+/* ---------- Don't animate what nobody is looking at ---------- */
+(function pauseOffscreenMotion() {
+  if (!('IntersectionObserver' in window)) return;
+  const strip = document.getElementById('theme-strip');
+  if (!strip) return;
+  new IntersectionObserver(([entry]) => {
+    strip.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+  }, { threshold: 0 }).observe(strip);
 })();
