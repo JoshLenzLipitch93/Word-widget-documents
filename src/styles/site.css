@@ -210,7 +210,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .hero__copy { padding-bottom: 40px; }
 @media (max-width: 900px) {
   .hero__inner { grid-template-columns: 1fr; gap: 32px; padding-top: 120px; min-height: 0; }
-  .hero__copy { padding-bottom: 0; }
+  .hero__copy { padding-bottom: 0; text-align: center; }
+  .indie { margin-left: auto; margin-right: auto; text-align: center; }
 }
 .hero__title {
   font-family: var(--ff-serif); font-weight: 400;
@@ -236,7 +237,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   padding: 10px 16px;
   border-radius: 12px;
   background: rgba(0,0,0,0.08);
-  max-width: 244px;
+  max-width: 364px;
 }
 .indie__heart { width: 30px; height: 27px; flex-shrink: 0; color: var(--c-yellow); }
 .indie__text {
@@ -276,7 +277,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
        store badge below a 390px-tall fold. */
     padding-top: 76px; padding-bottom: 0; align-items: start;
   }
-  .hero__copy { padding-bottom: 16px; }
+  .hero__copy { padding-bottom: 16px; text-align: left; }
+  .indie { margin-left: 0; margin-right: 0; text-align: left; }
   .hero__title { font-size: 32px; margin-bottom: 16px; }
   .indie { margin-bottom: 20px; padding: 8px 12px; }
   .indie__heart { width: 24px; height: 22px; }
@@ -608,7 +610,14 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
    whole page scrolled sideways. Most paid traffic is mobile, so this
    matters more than it looks.
    ====================================================================== */
+/* overflow-x: hidden on html makes it a scroll container, which silently
+   breaks position: sticky on the header — the Download button scrolled away
+   on every breakpoint. `clip` does the same clipping without creating one.
+   `hidden` stays as the fallback for Safari below 16. */
 html, body { overflow-x: hidden; }
+@supports (overflow: clip) {
+  html, body { overflow-x: clip; }
+}
 :target, section[id] { scroll-margin-top: 76px; }
 /* iOS paints a grey box on tap; keep feedback but in the brand's ink. */
 a, button, summary { -webkit-tap-highlight-color: rgba(67,68,70,0.12); }
