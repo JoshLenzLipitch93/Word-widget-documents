@@ -42,10 +42,19 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# site.css and site.js are not fingerprinted, so a long max-age means a
+# returning visitor gets today's HTML with yesterday's stylesheet — which
+# is a broken page, not a stale one. Revalidate instead; both files are
+# small and Netlify answers with a 304 off the ETag.
 [[headers]]
   for = "/styles/*"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/*"
