@@ -130,20 +130,6 @@ const SAMPLE_WORDS = [
   document.addEventListener('visibilitychange', () => document.hidden && stop());
 })();
 
-/* ---------- Header: hero chrome, then page chrome ---------- */
-// Over the hero the bar carries no fill. The observer's region starts one
-// header-height down the viewport, so the hero counts as "behind the bar"
-// until its last pixel clears that line. Nothing runs on scroll.
-(function headerOverHero() {
-  const header = document.getElementById('site-header');
-  const hero = document.querySelector('.hero');
-  if (!header || !hero || !('IntersectionObserver' in window)) return;
-
-  new IntersectionObserver(([entry]) => {
-    header.classList.toggle('site-header--over', entry.isIntersecting);
-  }, { rootMargin: '-64px 0px 0px 0px', threshold: 0 }).observe(hero);
-})();
-
 /* ---------- Hero loop: motion, data and battery ----------
    Most of the traffic here is paid mobile, so the loop should not play to an
    empty room, and it should not spend someone's data if they have asked it

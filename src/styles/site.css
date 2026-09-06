@@ -119,21 +119,14 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 
 /* ---------- Header ----------
-   Over the hero the bar is the hero: no fill, no rule, light ink. Once the
-   hero has scrolled past, it settles into the cream page chrome. Toggled by
-   an IntersectionObserver on the hero, so there is no scroll handler.
+   Terracotta the whole way down. Over the hero it is the same colour as the
+   ground, so no bar reads at all; past it, it stays a terracotta bar over the
+   cream and yellow below. That removes the scroll state entirely — the ink
+   never has to change, so there is nothing to observe or toggle.
    ---------------------------------------------------------------------- */
 .site-header {
   position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--c-extra-light-grey) 92%, transparent);
-  backdrop-filter: saturate(1.1) blur(6px);
-  border-bottom: 1px solid var(--hairline);
-  transition: background 220ms ease-out, border-color 220ms ease-out, color 220ms ease-out;
-}
-.site-header--over {
-  background: transparent;
-  backdrop-filter: none;
-  border-bottom-color: transparent;
+  background: var(--c-terracotta);
 }
 .site-header__inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -146,22 +139,19 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .brand {
   display: flex; align-items: center; gap: 10px;
-  font-family: var(--ff-serif); font-size: 22px; color: var(--c-off-black);
+  font-family: var(--ff-serif); font-size: 22px; color: #fff;
   letter-spacing: -0.01em;
-  transition: color 220ms ease-out;
 }
-.site-header--over .brand { color: #fff; }
 .brand__mark { width: 28px; height: 28px; }
 .brand__mark svg { width: 100%; height: 100%; }
 
 .nav { display: flex; align-items: center; gap: 24px; }
 .nav a:not(.btn) {
-  font-size: 15px; color: var(--c-dark-grey); font-weight: 400;
-  transition: color 220ms ease-out;
+  font-size: 15px; font-weight: 400;
+  color: color-mix(in srgb, #fff 78%, transparent);
+  transition: color 150ms ease-out;
 }
-.nav a:not(.btn):hover { color: var(--c-off-black); }
-.site-header--over .nav a:not(.btn) { color: color-mix(in srgb, #fff 78%, transparent); }
-.site-header--over .nav a:not(.btn):hover { color: #fff; }
+.nav a:not(.btn):hover { color: #fff; }
 
 /* ---------- Primary button (10px radius, Roboto 16 medium, off-black) ---------- */
 .btn {
@@ -176,13 +166,8 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .btn:hover { background: var(--c-mid-off-black); }
 .btn:active { background: var(--c-mid-off-black); }
 .btn--small { height: 40px; padding: 0 16px; font-size: 14px; }
-/* Download pill: white on the terracotta hero, off-black on the cream page. */
 .btn--light { background: #fff; color: var(--c-off-black); }
 .btn--light:hover { background: var(--c-light-grey); }
-.site-header:not(.site-header--over) .btn--light {
-  background: var(--c-off-black); color: #fff;
-}
-.site-header:not(.site-header--over) .btn--light:hover { background: var(--c-mid-off-black); }
 
 /* ---------- Hero — the rendered gate loop ----------
    Ground is --c-terracotta, the exact colour of the gate screen inside the
