@@ -529,44 +529,9 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   font-style: italic; font-size: 18px; line-height: 1.1; margin-top: 4px;
 }
 
-/* ---------- FAQ ---------- */
-.faq {
-  background: var(--c-light-grey);
-  border-radius: 12px;
-  padding: 8px 24px;
-  margin: 48px auto 0;
-  max-width: 880px;
-}
-.faq details {
-  border-bottom: 1px solid var(--hairline);
-}
-.faq details:last-child { border-bottom: 0; }
-.faq summary {
-  font-family: var(--ff-sans); font-weight: 500; font-size: 16px;
-  color: var(--c-off-black);
-  padding: 20px 0;
-  cursor: pointer; list-style: none;
-  display: flex; justify-content: space-between; align-items: center;
-  gap: 16px;
-}
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after {
-  content: ""; width: 14px; height: 14px;
-  border-right: 1.5px solid var(--c-dark-grey);
-  border-bottom: 1.5px solid var(--c-dark-grey);
-  transform: rotate(45deg); transition: transform 180ms ease-out;
-  flex-shrink: 0;
-}
-.faq details[open] summary::after { transform: rotate(-135deg); }
-.faq p {
-  margin: -4px 0 20px;
-  font-size: 15px; color: var(--c-dark-grey); font-weight: 400;
-  line-height: 1.6;
-}
-
 /* ---------- CTA band ---------- */
 .cta-band {
-  background: var(--c-off-black);
+  background: var(--c-terracotta);
   color: #fff;
   border-radius: 12px;
   padding: 64px 48px;
@@ -578,9 +543,11 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   .cta-band { padding: 48px 24px; margin: 48px 16px; }
 }
 .cta-band .display { color: #fff; }
+/* 55% white was readable on the old off-black band; terracotta needs more. */
+.cta-band .eyebrow { color: color-mix(in srgb, #fff 75%, transparent); }
 .cta-band__sub {
   font-family: var(--ff-sans); font-weight: 400; font-size: 17px;
-  color: color-mix(in srgb, #fff 70%, transparent);
+  color: color-mix(in srgb, #fff 88%, transparent);
   max-width: 520px; margin: 16px auto 32px;
 }
 
