@@ -63,3 +63,30 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ---------------------------------------------------------------------------
+# Short campaign paths for the social channels.
+#
+# SCHEME — platform first, account as a suffix. The launch account
+# (@easybrazillian_pt) takes the bare paths; later accounts add a suffix.
+#
+#   /ig      → ebpt-ig-bio     Instagram bio, Brazilian Portuguese  (LIVE)
+#   /tt      → ebpt-tt-bio     TikTok bio, same account             (not yet)
+#   /ig-es   → ebes-ig-bio     Instagram bio, Spanish account       (not yet)
+#   /tt-es   → ebes-tt-bio     TikTok bio, Spanish account          (not yet)
+#
+# The path is what a person sees in the address bar, so it stays short and
+# honest; the campaign token behind it is what App Store Connect reports on.
+# analytics.js reads ?ct= at runtime and stamps pt+ct onto every store link.
+#
+# A suffix, never a namespace: /es/... or /pt/... would squat the routes a
+# localised version of this site would want. /ig-es cannot collide.
+#
+# Add a path only when its channel actually exists — a live redirect to a
+# campaign token nobody is using pollutes the App Store Connect report.
+# ---------------------------------------------------------------------------
+[[redirects]]
+  from = "/ig"
+  to = "/?ct=ebpt-ig-bio"
+  status = 302
+  force = true
