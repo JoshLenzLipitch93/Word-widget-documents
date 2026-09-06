@@ -114,6 +114,11 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .site-header__inner {
   display: flex; align-items: center; justify-content: space-between;
   height: 64px;
+  max-width: none;
+  padding-left: 40px; padding-right: 40px;
+}
+@media (max-width: 720px) {
+  .site-header__inner { padding-left: 20px; padding-right: 20px; }
 }
 .brand {
   display: flex; align-items: center; gap: 10px;
@@ -207,7 +212,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   padding: 10px 16px;
   border-radius: 12px;
   background: rgba(0,0,0,0.08);
-  max-width: 300px;
+  max-width: 244px;
 }
 .indie__heart { width: 30px; height: 27px; flex-shrink: 0; color: var(--c-yellow); }
 .indie__text {
@@ -244,18 +249,17 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
    ---------------------------------------------------------------------- */
 .device {
   position: relative;
-  /* The media is masked to the phone silhouette over #16181A, so the corner
-     rounding only ever trims black against the page. */
-  border-radius: 13.6% / 6.4%;
-  overflow: hidden;
+  /* Outside the phone the media is filled with the colour it sits on, so the
+     phone's own bezel is the only rounded corner. A CSS radius here would be
+     a second, differently-shaped one. */
   flex-shrink: 0;
   line-height: 0;
 }
 .device__screen { width: 100%; height: auto; display: block; }
 /* Flat, per the house rule of one shadow on the page. */
-.device--hero { width: 372px; margin-bottom: -132px; }
+.device--hero { width: 372px; top: 44px; margin-bottom: -176px; }
 .device--step { width: 100%; max-width: 260px; }
-@media (max-width: 900px) { .device--hero { width: 300px; margin-bottom: -96px; } }
+@media (max-width: 900px) { .device--hero { width: 300px; top: 20px; margin-bottom: -116px; } }
 @media (max-width: 420px) { .device--hero { width: 256px; } }
 
 /* ---------- Section header ---------- */
@@ -299,10 +303,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .card__art--center { display: flex; align-items: center; justify-content: center; }
 .card__art--bleed { display: flex; flex-direction: column; align-items: center; gap: 24px; padding-bottom: 0; }
-.card__shot {
-  width: 76%; height: auto; border-radius: 18px 18px 0 0;
-  align-self: center;
-}
+.card__shot { width: 76%; height: auto; align-self: center; }
 .card__caption {
   font-family: var(--ff-serif); font-weight: 400; font-size: 28px;
   line-height: 1.15; color: var(--c-off-black);
