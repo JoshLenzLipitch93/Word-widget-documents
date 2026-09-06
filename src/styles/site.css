@@ -220,6 +220,9 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   color: color-mix(in srgb, #fff 92%, transparent);
 }
 .indie__text strong { font-weight: 500; color: #fff; }
+/* Second sentence takes its own line, so the badge never breaks mid-sentence
+   however the first one happens to wrap. */
+.indie__text span { display: block; }
 
 /* Apple's official App Store badge. Per guidelines: leave clear space, don't recolour. */
 .app-store-badge {
