@@ -35,7 +35,7 @@
       <a href="#gate">How it works</a>
       <a href="#widget">Widget</a>
       <a href="#faq">FAQ</a>
-      <a class="btn btn--small" href="#get">Get the app</a>
+      <a class="btn btn--small btn--light" href="#get">Download</a>
     </nav>
   </div>
 </header>
@@ -51,16 +51,15 @@
   <div class="container hero__inner">
     <div class="hero__copy">
       <h1 class="hero__title">Keep scrolling.<br/>Make it cost something.</h1>
-      <p class="hero__sub">Before Instagram, TikTok or X opens, a Portuguese word stands in the way. Type it, then carry on.</p>
+      <div class="indie">
+        <svg class="indie__heart" viewBox="0 0 36 32" fill="currentColor" aria-hidden="true" shape-rendering="crispEdges"><rect x="4" y="0" width="8" height="4"/><rect x="24" y="0" width="8" height="4"/><rect x="0" y="4" width="16" height="4"/><rect x="20" y="4" width="16" height="4"/><rect x="0" y="8" width="36" height="4"/><rect x="0" y="12" width="36" height="4"/><rect x="4" y="16" width="28" height="4"/><rect x="8" y="20" width="20" height="4"/><rect x="12" y="24" width="12" height="4"/><rect x="16" y="28" width="4" height="4"/></svg>
+        <p class="indie__text">Linguease is an <strong>indie app</strong> built by one person.</p>
+      </div>
       <a class="app-store-badge" data-placement="hero"
          href="https://apps.apple.com/app/apple-store/id6751727490?pt=128102719&amp;ct=site-direct&amp;mt=8"
          aria-label="Download Linguease on the App Store">
         <img src="assets/app-store-badge.svg" alt="Download on the App Store" />
       </a>
-      <div class="indie">
-        <svg class="indie__heart" viewBox="0 0 36 32" fill="currentColor" aria-hidden="true" shape-rendering="crispEdges"><rect x="4" y="0" width="8" height="4"/><rect x="24" y="0" width="8" height="4"/><rect x="0" y="4" width="16" height="4"/><rect x="20" y="4" width="16" height="4"/><rect x="0" y="8" width="36" height="4"/><rect x="0" y="12" width="36" height="4"/><rect x="4" y="16" width="28" height="4"/><rect x="8" y="20" width="20" height="4"/><rect x="12" y="24" width="12" height="4"/><rect x="16" y="28" width="4" height="4"/></svg>
-        <p class="indie__text">Linguease is an <strong>indie app</strong> built by one person.</p>
-      </div>
     </div>
 
     <div class="hero__stage">
@@ -75,59 +74,66 @@
 </section>
 
 <!-- ============================================================
-     FEATURE TILES — the App Store panel set, on the page.
-     Terracotta cards on the cream ground so they read as one
-     deliberate set rather than more hero.
+     WHAT IT DOES — the App Store panels as cream cards on yellow,
+     caption under the card rather than over the art.
      ============================================================ -->
-<section class="section section--tight" id="what">
+<section class="section section--tight band-yellow" id="what">
   <div class="container">
-    <div class="tiles">
+    <div class="cards">
 
-      <article class="tile">
-        <h2 class="tile__title">Add your own words.</h2>
-        <p class="tile__body">Type or paste anything you are trying to hold on to. Linguease fills in the translation and the phonetic.</p>
-        <div class="tile__stage">
+      <figure class="card">
+        <div class="card__art">
           <div class="word-list" aria-hidden="true">
-            <div class="word-row"><span class="word-row__word">bom dia</span><span class="word-row__trans">good morning</span></div>
-            <div class="word-row"><span class="word-row__word">mesmo</span><span class="word-row__trans">same</span></div>
-            <div class="word-row"><span class="word-row__word">sempre</span><span class="word-row__trans">always</span></div>
+            <div class="word-row">
+              <span class="word-row__word">Big / Small</span>
+              <span class="word-row__trans">Grande / Pequeno</span>
+            </div>
+            <div class="word-row">
+              <span class="word-row__word">Sempre</span>
+              <span class="word-row__trans">Always</span>
+            </div>
+            <div class="word-row">
+              <span class="word-row__word">Quase</span>
+              <span class="word-row__trans">Almost</span>
+            </div>
+            <div class="suggested">
+              <span class="suggested__chip">I love you</span>
+              <span class="suggested__chip">Forever</span>
+              <span class="suggested__chip">Sometimes</span>
+            </div>
+            <div class="add-fab">+</div>
           </div>
         </div>
-      </article>
+        <figcaption class="card__caption">Add your own words</figcaption>
+      </figure>
 
-      <article class="tile">
-        <h2 class="tile__title">Never open the app.</h2>
-        <p class="tile__body">Hear something on the street you do not know? Say it to Siri and it is waiting at the next gate.</p>
-        <div class="tile__stage">
+      <figure class="card">
+        <div class="card__art card__art--center">
+          <div class="flags" aria-hidden="false">
+            <span class="flag" role="img" aria-label="Brazil"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="60" fill="#009B3A"/><path d="M30 8 55 30 30 52 5 30Z" fill="#FEDF00"/><circle cx="30" cy="30" r="10" fill="#002776"/><path d="M20.5 27.5a22 22 0 0 1 19 3.2" stroke="#fff" stroke-width="2.6" fill="none"/></svg></span>
+            <span class="flag" role="img" aria-label="Spain"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="60" fill="#AA151B"/><rect y="15" width="60" height="30" fill="#F1BF00"/></svg></span>
+            <span class="flag" role="img" aria-label="France"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="20" height="60" fill="#0055A4"/><rect x="20" width="20" height="60" fill="#fff"/><rect x="40" width="20" height="60" fill="#EF4135"/></svg></span>
+            <span class="flag" role="img" aria-label="Germany"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="20" fill="#000"/><rect y="20" width="60" height="20" fill="#DD0000"/><rect y="40" width="60" height="20" fill="#FFCE00"/></svg></span>
+            <span class="flag" role="img" aria-label="Netherlands"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="20" fill="#AE1C28"/><rect y="20" width="60" height="20" fill="#fff"/><rect y="40" width="60" height="20" fill="#21468B"/></svg></span>
+            <span class="flag" role="img" aria-label="Italy"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="20" height="60" fill="#009246"/><rect x="20" width="20" height="60" fill="#fff"/><rect x="40" width="20" height="60" fill="#CE2B37"/></svg></span>
+            <span class="flag" role="img" aria-label="Portugal"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="60" fill="#DA291C"/><rect width="24" height="60" fill="#046A38"/><circle cx="24" cy="30" r="10" fill="none" stroke="#FFE900" stroke-width="2.4"/><path d="M24 23.4c-2.9 0-4.5 1.5-4.5 3.4v4.1c0 2.5 2.3 4.4 4.5 5.4 2.2-1 4.5-2.9 4.5-5.4v-4.1c0-1.9-1.6-3.4-4.5-3.4Z" fill="#fff" stroke="#DA291C" stroke-width="1.2"/></svg></span>
+            <span class="flag" role="img" aria-label="Ireland"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="20" height="60" fill="#169B62"/><rect x="20" width="20" height="60" fill="#fff"/><rect x="40" width="20" height="60" fill="#FF883E"/></svg></span>
+            <span class="flag" role="img" aria-label="United Kingdom"><svg viewBox="0 0 60 60" aria-hidden="true"><rect width="60" height="60" fill="#012169"/><path d="M0 0 60 60M60 0 0 60" stroke="#fff" stroke-width="12"/><path d="M0 0 60 60M60 0 0 60" stroke="#C8102E" stroke-width="6"/><path d="M30 0v60M0 30h60" stroke="#fff" stroke-width="16"/><path d="M30 0v60M0 30h60" stroke="#C8102E" stroke-width="9"/></svg></span>
+          </div>
+        </div>
+        <figcaption class="card__caption">Translation in 9 languages</figcaption>
+      </figure>
+
+      <figure class="card">
+        <div class="card__art card__art--bleed">
           <div class="siri-bubble" aria-hidden="true">
             <span>&ldquo;Hey Siri,</span>
             <span>add <em>saideira</em> to Linguease&rdquo;</span>
           </div>
+          <img class="card__shot" src="assets/video/step-1-home.jpg" alt="" loading="lazy" width="540" height="1148" />
         </div>
-      </article>
-
-      <article class="tile">
-        <h2 class="tile__title">More than Portuguese.</h2>
-        <p class="tile__body">Brazilian Portuguese is where the word lists are strongest. These are in the picker too.</p>
-        <div class="tile__stage">
-          <div class="chips" aria-hidden="true">
-            <span class="chip">Espa&ntilde;ol</span><span class="chip">Fran&ccedil;ais</span><span class="chip">Deutsch</span>
-            <span class="chip">Italiano</span><span class="chip">Nederlands</span><span class="chip">Gaeilge</span>
-            <span class="chip">Portugu&ecirc;s (PT)</span><span class="chip">English</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="tile">
-        <h2 class="tile__title">No Screen Time.</h2>
-        <p class="tile__body">The gate is a Shortcuts automation. Linguease never asks for the Family Controls permission, and translations run on-device.</p>
-        <div class="tile__stage">
-          <svg class="tile__glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M24 5l15 6v11c0 10-6.4 17.6-15 21-8.6-3.4-15-11-15-21V11z"/>
-            <path d="M17 24l5 5 10-11"/>
-          </svg>
-        </div>
-      </article>
+        <figcaption class="card__caption">Add words with Siri</figcaption>
+      </figure>
 
     </div>
   </div>
@@ -233,7 +239,7 @@
       </details>
       <details>
         <summary>Is it only Brazilian Portuguese?</summary>
-        <p>That is what it is built around and where the word lists are strongest. Fifty other languages are available in the picker, European Portuguese, Spanish, French, Italian, German, Dutch and Irish among them.</p>
+        <p>Nine languages in all. Brazilian Portuguese is what it is built around and where the word lists are strongest. European Portuguese, Spanish, French, German, Dutch, Italian, Irish and English are all in the picker.</p>
       </details>
       <details>
         <summary>Is it free?</summary>

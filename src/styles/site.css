@@ -146,13 +146,13 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 .btn:hover { background: var(--c-mid-off-black); }
 .btn:active { background: var(--c-mid-off-black); }
 .btn--small { height: 40px; padding: 0 16px; font-size: 14px; }
-/* Over the terracotta hero the fill would read as a hole. An outline in the
-   same white as the headline keeps the text white and the bar quiet. */
-.site-header--over .btn {
-  background: transparent; color: #fff;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+/* Download pill: white on the terracotta hero, off-black on the cream page. */
+.btn--light { background: #fff; color: var(--c-off-black); }
+.btn--light:hover { background: var(--c-light-grey); }
+.site-header:not(.site-header--over) .btn--light {
+  background: var(--c-off-black); color: #fff;
 }
-.site-header--over .btn:hover { background: rgba(255,255,255,0.14); }
+.site-header:not(.site-header--over) .btn--light:hover { background: var(--c-mid-off-black); }
 
 /* ---------- Hero — the rendered gate loop ----------
    Ground is --c-terracotta, the exact colour of the gate screen inside the
@@ -162,6 +162,7 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   background: var(--c-terracotta);
   color: #fff;
   position: relative;
+  overflow: hidden;
   /* Pull the hero up under the sticky header so the bar sits ON the
      terracotta rather than on a cream strip above it. The padding below
      puts the content back where it was. */
@@ -169,20 +170,24 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .hero__inner {
   padding-top: 136px;
-  padding-bottom: 88px;
+  padding-bottom: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px; align-items: center;
+  grid-template-columns: 1.32fr 1fr;
+  gap: 48px; align-items: center;
+  min-height: 620px;
 }
+/* The phone runs off the foot of the hero rather than sitting inside it. */
+.hero__copy { padding-bottom: 40px; }
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; gap: 40px; padding-top: 120px; padding-bottom: 64px; }
+  .hero__inner { grid-template-columns: 1fr; gap: 32px; padding-top: 120px; min-height: 0; }
+  .hero__copy { padding-bottom: 0; }
 }
 .hero__title {
   font-family: var(--ff-serif); font-weight: 400;
-  font-size: clamp(40px, 6vw, 76px);
-  line-height: 1.02; letter-spacing: -0.015em;
+  font-size: clamp(38px, 4.8vw, 58px);
+  line-height: 1.06; letter-spacing: -0.015em;
   color: #fff;
-  margin: 0 0 18px;
+  margin: 0 0 28px;
 }
 .hero__sub {
   font-family: var(--ff-sans); font-weight: 300; font-size: 18px; line-height: 1.5;
@@ -245,12 +250,10 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
   line-height: 0;
 }
 .device__screen { width: 100%; height: auto; display: block; }
-.device--hero {
-  width: 330px;
-  box-shadow: 0 30px 64px rgba(80, 24, 12, 0.32);
-}
+/* Flat, per the house rule of one shadow on the page. */
+.device--hero { width: 372px; margin-bottom: -132px; }
 .device--step { width: 100%; max-width: 260px; }
-@media (max-width: 900px) { .device--hero { width: 296px; } }
+@media (max-width: 900px) { .device--hero { width: 300px; margin-bottom: -96px; } }
 @media (max-width: 420px) { .device--hero { width: 256px; } }
 
 /* ---------- Section header ---------- */
@@ -275,73 +278,89 @@ button { font: inherit; cursor: pointer; border: 0; background: none; color: inh
 }
 .section-head { max-width: 620px; }
 
-/* ---------- Feature tiles — the App Store panel set ---------- */
-.tiles {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+/* ---------- What it does — cream cards on yellow ---------- */
+.band-yellow { background: var(--c-yellow); }
+.cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
 }
-@media (max-width: 1000px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px)  { .tiles { grid-template-columns: 1fr; } }
-.tile {
-  background: var(--c-terracotta);
-  color: #fff;
-  border-radius: 12px;
-  padding: 28px 24px 24px;
-  display: flex; flex-direction: column;
-}
-.tile__title {
-  font-family: var(--ff-serif); font-weight: 400; font-size: 26px;
-  line-height: 1.12; letter-spacing: -0.01em; color: #fff;
-  margin: 0 0 10px;
-}
-.tile__body {
-  font-family: var(--ff-sans); font-weight: 300; font-size: 14px; line-height: 1.5;
-  color: color-mix(in srgb, #fff 78%, transparent);
-  margin: 0 0 22px;
-}
-.tile__stage { margin-top: 2px; }
-.tile__glyph { width: 64px; height: 64px; color: color-mix(in srgb, #fff 68%, transparent); }
-
-/* Tile 1 — the app's own list rows */
-.word-list {
+@media (max-width: 860px) { .cards { grid-template-columns: 1fr; gap: 36px; max-width: 420px; margin: 0 auto; } }
+.card { margin: 0; }
+.card__art {
   background: var(--c-extra-light-grey);
-  border-radius: 10px;
-  padding: 4px 12px;
+  border-radius: 24px;
+  padding: 28px;
+  height: 420px;
+  overflow: hidden;
+  position: relative;
 }
+.card__art--center { display: flex; align-items: center; justify-content: center; }
+.card__art--bleed { display: flex; flex-direction: column; align-items: center; gap: 24px; padding-bottom: 0; }
+.card__shot {
+  width: 76%; height: auto; border-radius: 18px 18px 0 0;
+  align-self: center;
+}
+.card__caption {
+  font-family: var(--ff-serif); font-weight: 400; font-size: 28px;
+  line-height: 1.15; color: var(--c-off-black);
+  margin: 20px 0 0; text-align: center;
+}
+
+/* Card 1 — the app's own vocab list */
+.suggested { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.suggested__chip {
+  display: inline-flex; align-items: center; height: 30px; padding: 0 12px;
+  border-radius: 999px; background: var(--c-light-grey);
+  font-family: var(--ff-sans); font-size: 13px; font-weight: 300; color: var(--c-dark-grey);
+}
+.add-fab {
+  position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%);
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--c-terracotta); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-sans); font-size: 26px; font-weight: 300; line-height: 1;
+}
+
+/* Card 2 — nine flags, drawn rather than emoji so they survive off Apple */
+.flags {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 26px; place-items: center;
+}
+.flag {
+  display: block; width: 84px; height: 84px;
+  border-radius: 50%; overflow: hidden;
+  box-shadow: 0 0 0 4px var(--c-light-yellow, #FFDCA9);
+}
+.flag svg { width: 100%; height: 100%; display: block; }
+
+/* Word list, used inside the first card */
+.word-list { padding: 0; }
 .word-row {
   display: flex; flex-direction: column;
-  padding: 7px 0 7px 10px;
+  padding: 13px 0 13px 12px;
   border-left: 2px solid var(--c-terracotta);
   border-bottom: 1px solid var(--hairline);
 }
 .word-row:last-child { border-bottom: 0; }
 .word-row__word {
-  font-family: var(--ff-serif); font-size: 16px; line-height: 1.1; color: var(--c-off-black);
+  font-family: var(--ff-serif); font-size: 20px; line-height: 1.15; color: var(--c-off-black);
 }
 .word-row__trans {
-  font-family: var(--ff-serif); font-style: italic; font-size: 13px; color: var(--c-dark-grey);
+  font-family: var(--ff-serif); font-style: italic; font-size: 16px; color: var(--c-dark-grey);
 }
 
 /* Tile 2 — the Siri bubble from the store screenshots */
 .siri-bubble {
+  width: 100%;
+  text-align: center;
   background: var(--c-yellow);
   color: var(--c-extra-dark-yellow, #5D4520);
   border-radius: 14px;
   padding: 16px 18px;
-  font-family: var(--ff-serif); font-size: 18px; line-height: 1.35;
+  font-family: var(--ff-serif); font-size: 19px; line-height: 1.35;
   display: flex; flex-direction: column;
 }
 .siri-bubble em { font-style: italic; }
-
-/* Tile 3 — language chips, not flags: flag emoji fall apart off Apple platforms */
-.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.chip {
-  display: inline-flex; align-items: center;
-  height: 26px; padding: 0 11px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.20);
-  font-family: var(--ff-sans); font-size: 13px; font-weight: 300; color: #fff;
-}
 
 /* ---------- The gate — three stills lifted from the same recording ---------- */
 .steps {
